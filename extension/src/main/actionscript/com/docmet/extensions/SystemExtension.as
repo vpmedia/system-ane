@@ -35,7 +35,7 @@ import flash.external.ExtensionContext;
 /**
  * The ClientExtension class is the interface for the application native extension (ANE).
  */
-public class BotanCryptoExtension extends EventDispatcher {
+public class SystemExtension extends EventDispatcher {
     //----------------------------------
     //  Private static properties
     //----------------------------------
@@ -53,7 +53,7 @@ public class BotanCryptoExtension extends EventDispatcher {
     /**
      * @private
      */
-    private static var instance:BotanCryptoExtension;
+    private static var instance:SystemExtension;
 
     //----------------------------------
     //  Public variables
@@ -80,7 +80,7 @@ public class BotanCryptoExtension extends EventDispatcher {
     /**
      * Create a new ClientExtension.
      */
-    public function BotanCryptoExtension() {
+    public function SystemExtension() {
         super();
         if (isInstantiated)
             return;
@@ -163,7 +163,7 @@ public class BotanCryptoExtension extends EventDispatcher {
     public static function createInstance():void {
         trace("ClientExtension::createInstance");
         try {
-            context = ExtensionContext.createExtensionContext("com.docmet.extensions.BotanCryptoExtension", "");
+            context = ExtensionContext.createExtensionContext("com.docmet.extensions.SystemExtension", "");
             context.addEventListener(StatusEvent.STATUS, instance.onStatus, false, 0, true);
             isInstantiated = true;
         }

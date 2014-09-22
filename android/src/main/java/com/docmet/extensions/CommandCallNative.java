@@ -29,6 +29,9 @@
  */
 package com.docmet.extensions;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import com.adobe.fre.FREContext;
 import com.adobe.fre.FREFunction;
 import com.adobe.fre.FREObject;
@@ -49,15 +52,27 @@ public class CommandCallNative implements FREFunction  {
      * Command entry point
      */ 
     public FREObject call(FREContext ctx, FREObject[] passedArgs) {
-        Log.d(TAG, "CommandCallNative successfully called.");
-        Log.d(TAG, "stringFromJNI: " + stringFromJNI());
-        return null;
+        FREObject result = null;
+        String commandResult = null;
+        try {
+            FREObject typeObj = passedArgs[0];
+            int type = typeObj.getAsInt();
+            List<String> nativeList = new ArrayList<String>();
+            //nativeList.add("passedArgs 1..N");
+            String[] nativeArgs = nativeList.toArray(new String[nativeList.size()]);
+            commandResult = callNative(type, nativeArgs.length, nativeArgs);
+            Log.d(TAG, "call: " + Integer.toString(type) + " => " + commandResult);
+            result = FREObject.newObject(commandResult);
+        } catch (Exception e) {
+            Log.d(TAG, "error: " + e.getMessage());
+        }
+        return result;
     }    
       
     /*
      * JNI Example
      */ 
-    public native String stringFromJNI();
+    public native String callNative(int type, int argc, String[] argv);
     
     /*
      * @private

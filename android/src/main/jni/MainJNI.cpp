@@ -30,13 +30,21 @@
 #include <string.h>
 #include <jni.h>
 
-extern "C" {
+extern "C" {      
+      /*
+       * Native call
+       *
+       * @param env reference to JNI environment, which lets you access all the JNI fucntions.
+       * @param obj reference to 'this' Java object.
+       * @param type type of native command
+       * @param argc number of arguments
+       * @param argv list of argument values
+       */
       JNIEXPORT jstring JNICALL
-      Java_com_docmet_extensions_CommandCallNative_stringFromJNI
-      (JNIEnv *env, jobject obj)
+      Java_com_docmet_extensions_CommandCallNative_callNative
+      (JNIEnv *env, jobject obj, jint type, jint argc, jobjectArray argv)
       {
-            // LibraryInitializer init;
-            return env->NewStringUTF("Hello from C++ over JNI!");
+            return env->NewStringUTF("NativeCall!");
       }
 }
 
