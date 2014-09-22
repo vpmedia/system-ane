@@ -1,0 +1,78 @@
+#
+# =BEGIN MIT LICENSE
+# 
+# The MIT License (MIT)
+#
+# Copyright (c) 2014 Andras Csizmadia
+# http://www.vpmedia.hu
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+# 
+# =END MIT LICENSE
+#
+
+git: 
+    depth: 1
+
+language: objective-c
+
+env:
+    - TERM=dumb
+
+before_script:
+    # Update Brew silently
+    - brew update >brew-update.log
+    # Install Brew Packages silently
+    - brew install gradle >brew-install.log
+    - brew install adobe-air-sdk >>brew-install.log
+    - brew install android-sdk >>brew-install.log
+    - brew install android-ndk >>brew-install.log
+    # Adobe Flash Player for CLI
+    - brew install caskroom/cask/brew-cask
+    - brew cask install flash-player-debugger
+    # Set env. variable used by FlexUnit
+    - export FLASHPLAYER_DEBUGGER="$HOME/Applications/Flash Player Debugger.app/Contents/MacOS/Flash Player Debugger"
+    # Set env. variable used by Gradle
+    - export FLASH_PLAYER_EXE="$HOME/Applications/Flash Player Debugger.app/Contents/MacOS/Flash Player Debugger"
+    # Apache Flex SDK
+    - wget -O flex_sdk.zip http://mirrors.gigenet.com/apache/flex/4.13.0/binaries/apache-flex-sdk-4.13.0-bin.zip
+    - unzip -q flex_sdk.zip -d flex_sdk
+    # Init PlayerGlobals
+    - echo env.PLAYERGLOBAL_HOME=libs/player > flex_sdk/env.properties
+    # Init Apache Flex SDK
+    - mkdir -p flex_sdk/frameworks/libs/player/11.1/
+    - mkdir -p flex_sdk/frameworks/libs/player/15.0/
+    - cp -f /usr/local/opt/adobe-air-sdk/libexec/frameworks/libs/player/15.0/playerglobal.swc flex_sdk/frameworks/libs/player/11.1/
+    - cp -f /usr/local/opt/adobe-air-sdk/libexec/frameworks/libs/player/15.0/playerglobal.swc flex_sdk/frameworks/libs/player/15.0/
+    # Init Android SDK
+    - echo yes | android update sdk --filter platform-tools,android-20,build-tools-20.0.0 --force --no-ui > /dev/null
+    - export ANDROID_HOME=/usr/local/opt/android-sdk
+    - export ANDROID_NDK_HOME=/usr/local/opt/android-ndk
+    - export ANDROID_NDK_ROOT=/usr/local/opt/android-ndk
+    - export NDK_HOME=/usr/local/opt/android-ndk
+    # Set env. variable used by Gradle
+    - export FLEX_HOME="$TRAVIS_BUILD_DIR/flex_sdk"
+    # Init Adobe AIR SDK
+    - mkdir -p /usr/local/opt/adobe-air-sdk/libexec/frameworks/libs/player/11.1/
+    - cp -f /usr/local/opt/adobe-air-sdk/libexec/frameworks/libs/player/15.0/playerglobal.swc /usr/local/opt/adobe-air-sdk/libexec/frameworks/libs/player/11.1/
+    # Set env. variable used by Gradle
+    - export AIR_HOME=/usr/local/opt/adobe-air-sdk/libexec
+
+script:
+    - gradle

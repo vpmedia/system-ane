@@ -1,0 +1,98 @@
+//
+// =BEGIN MIT LICENSE
+// 
+// The MIT License (MIT)
+//
+// Copyright (c) 2014 Andras Csizmadia
+// http://www.vpmedia.hu
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+// 
+// =END MIT LICENSE
+//
+
+import org.apache.tools.ant.taskdefs.condition.Os
+
+apply plugin: 'cpp'
+apply plugin: 'windows-resources'
+
+def AIR_HOME = System.getenv('AIR_HOME')
+def MINGW_HOME = System.getenv('MINGW_HOME')
+def MSYS_HOME = System.getenv('MSYS_HOME')
+
+model {
+    buildTypes {
+        release
+    }
+    platforms {
+        x86 {
+            architecture 'x86'
+        }
+    }
+    toolChains {
+        gcc(Gcc) {
+            path file(MINGW_HOME).absolutePath + '/bin'
+        }
+    }
+     repositories {
+        libs(PrebuiltLibraries) {
+            FlashRuntimeExtensions { 
+                binaries.withType(StaticLibraryBinary) {
+                    staticLibraryFile = file("${AIR_HOME}/lib/win/FlashRuntimeExtensions.lib")
+                }
+                binaries.withType(SharedLibraryBinary) {
+                    sharedLibraryFile = file("${AIR_HOME}/runtimes/air/win/Adobe AIR/Versions/1.0/Adobe AIR.dll")
+                    sharedLibraryLinkFile = file("${AIR_HOME}/lib/win/FlashRuntimeExtensions.lib")
+                }
+            }
+        }
+    }
+}
+
+libraries {
+    main {   
+    }
+}
+
+sources {
+    main {
+        cpp {
+            lib library: 'FlashRuntimeExtensions', linkage: 'shared'
+        } 
+    }
+}
+
+binaries.withType(SharedLibraryBinary) {
+    if (toolChain in Gcc) {
+        cppCompiler.args '-Wall', '-O4', '-Wno-unused-function', '-Wno-unused-value', '-Wno-unused-variable', '-Wno-parentheses', '-Wno-unknown-pragmas', '-Wno-maybe-uninitialized'
+        cppCompiler.define 'EXPORT'
+        linker.args '-shared', '-static-libgcc', '-static-libstdc++', '-Wl,--subsystem,windows,--output-def,ClientExtension.def,--out-implib,libClientExtension.a'
+    }
+}
+
+if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+    project(":extension").afterEvaluate { 
+        extension -> extension.compile.dependsOn ':common:package_all'
+    }
+} 
+
+task package_all << {}
+package_all.dependsOn 'mainSharedLibrary'
+
+defaultTasks 'clean', 'package_all'

@@ -1,0 +1,266 @@
+//
+// =BEGIN MIT LICENSE
+// 
+// The MIT License (MIT)
+//
+// Copyright (c) 2014 Andras Csizmadia
+// http://www.vpmedia.hu
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+// 
+// =END MIT LICENSE
+//
+ 
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+        url 'https://raw.githubusercontent.com/vpmedia/mvnrepository/master'
+    }
+    maven {
+        url 'https://oss.sonatype.org/content/groups/public/'
+    }
+}
+
+configurations {
+    compile
+    test
+}
+
+dependencies {
+    test group: 'org.apache', name: 'flexunit-tasks', version: '4.2.0-20140410', ext: 'jar'
+    test group: 'org.apache', name: 'flexunit-as3', version: '4.2.0-20140410', ext: 'swc'
+    test group: 'org.apache', name: 'flexunit-cilistener', version: '4.2.0-20140410', ext: 'swc'
+    test group: 'org.apache', name: 'flexunit-uilistener', version: '4.2.0-20140410', ext: 'swc'
+    test group: 'org.apache', name: 'hamcrest-as3', version: '1.1.3', ext: 'swc'
+}
+
+//----------------------------------
+//  SDK
+//----------------------------------
+
+def AIR_HOME = System.getenv('AIR_HOME')
+def FLEX_HOME = System.getenv('FLEX_HOME')
+ant.FLEX_HOME = "${FLEX_HOME}"
+
+//----------------------------------
+//  Core
+//----------------------------------
+
+// Get version from Jenkins CI
+if("${System.env.JENKINS_BUILD_VERSION}" != "null") {
+    version = "${System.env.JENKINS_BUILD_VERSION}"
+}
+
+//----------------------------------
+//  Folders
+//----------------------------------
+
+def binDir = new File(projectDir, '/bin')
+def buildDir = new File(projectDir, '/build')
+def confDir = new File(projectDir, '/src/main/temp')
+def publishDir = new File(projectDir, '/publish')
+def reportDir = new File(projectDir, '/build/reports')
+def tempDir = new File(projectDir, '/temp')
+tempDir.mkdirs()
+def tempDirPath = tempDir.absolutePath
+
+def exeExt = '.dmg'
+import org.apache.tools.ant.taskdefs.condition.Os
+if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+    exeExt = '.exe'
+}
+
+//----------------------------------
+//  Tasks
+//----------------------------------
+
+task clean << {
+    if (binDir.isDirectory()) {
+        delete(binDir)
+    }
+    if (buildDir.isDirectory()) {
+        delete(buildDir)
+    }
+    if (confDir.isDirectory()) {
+        delete(confDir)
+    }
+    if (tempDir.isDirectory()) {
+        delete(tempDir)
+    }
+    if (publishDir.isDirectory()) {
+        delete(publishDir)
+    }
+}
+
+task copyDeps(type: Copy) {
+    from configurations.all
+    into "$projectDir/bin"
+}
+
+task compile_init << {
+    confDir.mkdirs()
+    ant.copy(todir: 'src/main/temp') {
+        fileset(dir : 'src/main/templates', includes: '*.*' )
+    }    
+    ant.replace(dir: "src/main/temp/", token: '${viewport_width}', value: '800')
+    ant.replace(dir: "src/main/temp/", token: '${viewport_height}', value: '600')
+    ant.replace(dir: "src/main/temp/", token: '${viewport_scale}', value: '1')
+    ant.replace(dir: "src/main/temp/", token: '${version}', value: "${version}")
+    ant.replace(dir: "src/main/temp/", token: '${debug}', value: 'true')
+    ant.replace(dir: "src/main/temp/", token: '${player_version}', value: '15.0')
+    ant.replace(dir: "src/main/temp/", token: '${swf_version}', value: '26')
+    ant.replace(dir: "src/main/temp/", token: '${assets}', value: '')
+    ant.replace(dir: "src/main/temp/", token: '${vars}', value: '')
+}
+
+task compile(type: JavaExec) { 
+    main = "com.adobe.flash.compiler.clients.MXMLC"
+    classpath = files("${AIR_HOME}/lib/compiler.jar")
+    workingDir = "${projectDir}"
+    def argsList = [
+                'src/main/actionscript/Main.as',
+                '-debug=true',
+                '-load-config+=src/main/temp/.flexConfig.xml',
+                '-library-path+=../extension/publish',
+                '-output=build/Main.swf'
+            ]
+    def airConfig = "${AIR_HOME}" + '/frameworks/air-config.xml'
+    def loadAirConfig = '-load-config+='+"${airConfig}";
+    argsList.push(loadAirConfig)
+    args = argsList
+}
+
+task test << { 
+    if (reportDir.isDirectory()) {
+        delete("${reportDir}")
+    }
+    reportDir.mkdirs()
+    ant.taskdef(resource: 'flexUnitTasks.tasks', classpath: configurations.test.asPath) 
+    ant.flexunit(workingDir:'bin',toDir:'build/reports',haltonfailure:'false',verbose:'true',player:'flash',headless:'false',localTrusted:'true') {
+        source(dir: 'src/main/actionscript')
+        testSource(dir: 'src/test/actionscript') {
+           include(name: '**/*Test.as')
+        }
+        library(dir: 'bin')
+    }
+}
+
+task package_init << {
+    buildDir.mkdirs()
+    ant.copy(todir: tempDir) {
+        fileset(dir : "build", includes: '*.swf' )
+        fileset(dir : "src/main/temp", includes: '*-app.xml' )
+        fileset(dir : "src/main/resources" )
+    }
+}
+
+task package_move << {
+    publishDir.mkdirs()
+    ant.move(file: "temp/Main" + exeExt, todir: publishDir)
+    ant.move(file: "temp/Main.apk", todir: publishDir)
+}
+
+task package_exe(type: JavaExec) { 
+    main = "com.adobe.air.ADT"
+    classpath = files("${AIR_HOME}/lib/adt.jar")
+    workingDir = tempDir
+    def argsList = [
+        '-package',
+        '-keystore',
+        '../src/main/certs/gradlefx.p12',
+        '-storetype',
+        'pkcs12',
+        '-storepass',
+        'gradlefx',
+        '-tsa',
+        'none',
+        '-target',
+        'native',
+        'Main',
+        'Main-app.xml',
+        'Main.swf',
+        '-C',
+        '../src/main/assets',
+        '-C',
+        "${tempDirPath}",
+        'icons',
+        '-extdir',
+        '../../extension/publish'
+            ]
+    args = argsList
+}
+
+task package_apk(type: JavaExec) { 
+    main = "com.adobe.air.ADT"
+    classpath = files("${AIR_HOME}/lib/adt.jar")
+    workingDir = tempDir
+    def argsList = [
+        '-package',
+        '-target',
+        'apk-captive-runtime',
+        '-keystore',
+        '../src/main/certs/gradlefx.p12',
+        '-storetype',
+        'pkcs12',
+        '-storepass',
+        'gradlefx',
+        'Main',
+        'Main-app.xml',
+        'Main.swf',
+        '-C',
+        '../src/main/assets',
+        '-C',
+        "${tempDirPath}",
+        'icons',
+        '-extdir',
+        '../../extension/publish'
+            ]
+    args = argsList
+}
+
+task runtimeTest << {
+    def aneDIR = file('../extension/temp/unzippedANE')
+    copy {
+        def zipFile = file('../extension/publish/Main.ane')
+        from zipTree(zipFile)
+        into aneDIR.absolutePath + '/Main.ane' 
+    }
+    def output = exec {
+        workingDir = tempDir
+        executable = "${AIR_HOME}/bin/adl"
+        args = ['-profile', 'extendedDesktop', '-extdir', aneDIR, 'Main-app.xml', tempDir]
+    }
+}
+
+task package_all << {
+}
+
+task analyze << {
+}
+
+compile_init.dependsOn copyDeps
+compile.dependsOn compile_init
+package_init.dependsOn compile
+package_apk.dependsOn package_init
+package_exe.dependsOn package_apk
+package_move.dependsOn package_exe
+package_all.dependsOn package_move
+
+defaultTasks 'clean', 'package_all', 'analyze'

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ ~
+ ~ =BEGIN MIT LICENSE
+ ~ 
+ ~ The MIT License (MIT)
+ ~
+ ~ Copyright (c) 2014 Andras Csizmadia
+ ~ http://www.vpmedia.hu
+ ~ 
+ ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+ ~ of this software and associated documentation files (the "Software"), to deal
+ ~ in the Software without restriction, including without limitation the rights
+ ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ ~ copies of the Software, and to permit persons to whom the Software is
+ ~ furnished to do so, subject to the following conditions:
+ ~ 
+ ~ The above copyright notice and this permission notice shall be included in
+ ~ all copies or substantial portions of the Software.
+ ~ 
+ ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ ~ THE SOFTWARE.
+ ~ 
+ ~ =END MIT LICENSE
+ ~
+-->
+<flex-config xmlns="http://www.adobe.com/2006/flex-config">  
+    <default-frame-rate>30</default-frame-rate>
+    <default-background-color>0x000000</default-background-color>
+    <default-size><width>${viewport_width}</width><height>${viewport_height}</height></default-size>
+    <swf-version>${swf_version}</swf-version>
+    <target-player>${player_version}</target-player> 
+    <!-- Additional compiler parameters. -->
+    <compiler>
+        <source-path>
+            <path-element>../actionscript</path-element>
+        </source-path>
+        <library-path append="true">
+            <path-element>../../../../extension/publish</path-element>      
+        </library-path>  
+        <define append="true"><name>APP::VERSION</name><value>"${version}"</value></define>
+        <define append="true"><name>APP::DEBUG</name><value>${debug}</value></define>
+        <define append="true"><name>APP::ASSETS</name><value>"${assets}"</value></define>
+        <define append="true"><name>APP::VARS</name><value>"${vars}"</value></define>
+        <define append="true"><name>VIEWPORT::WIDTH</name><value>${viewport_width}</value></define>
+        <define append="true"><name>VIEWPORT::HEIGHT</name><value>${viewport_height}</value></define>
+        <define append="true"><name>VIEWPORT::SCALE</name><value>${viewport_scale}</value></define>
+        <define append="true"><name>RUNTIME::AIR</name><value>true</value></define>
+        <define append="true"><name>RUNTIME::FLASH</name><value>false</value></define>
+        <define append="true"><name>PLATFORM::DESKTOP</name><value>true</value></define>
+        <define append="true"><name>PLATFORM::MOBILE</name><value>false</value></define>
+        <define append="true"><name>PLATFORM::WEB</name><value>false</value></define>
+    </compiler>
+</flex-config>
