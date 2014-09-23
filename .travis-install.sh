@@ -9,10 +9,9 @@ fi
 
 if [[ "$DARWIN" = true ]]; then
 	# Update Brew silently
-	brew update
+	brew update >brew-update.log
 	# Install Brew Packages silently
-	brew install gradle
-	brew install adobe-air-sdk
+	brew install gradle adobe-air-sdk >brew-install.log
 	brew install android-sdk
 	brew install android-ndk
 	# Adobe Flash Player for CLI

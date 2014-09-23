@@ -13,6 +13,10 @@ AIR Native Extension for core System APIs
 
 > Setting the **JAVA_HOME** env. variable is essential
 
+* Gradle (Common)
+
+> Setting the **GRADLE_HOME** env. variable is essential
+
 * Adobe AIR SDK (Flash)
 
 > Setting the **AIR_HOME** env. variable is essential
@@ -32,7 +36,7 @@ AIR Native Extension for core System APIs
 
 ## Building
 
-* run **gradle**
+* run **build**
 
 ## License
 
