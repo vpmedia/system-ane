@@ -1,4 +1,4 @@
-#import "FlashRuntimeExtensions.h"
+#import "ClientExtension.h"
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
@@ -23,67 +23,38 @@ FREObject callNative(FREContext ctx, void* funcData, uint32_t argc, FREObject ar
 //
 //------------------------------------
 
-// ContextInitializer()
-//
-// The context initializer is called when the runtime creates the extension context instance.
 void ContextInitializer(void* extData, const uint8_t* ctxType, FREContext ctx,
                         uint32_t* numFunctionsToTest, const FRENamedFunction** functionsToSet) 
 {    
-    *numFunctionsToTest = 1;
-    
+    *numFunctionsToTest = 1;    
     FRENamedFunction* func = (FRENamedFunction*) malloc(sizeof(FRENamedFunction) * 6);
     func[0].name = (const uint8_t*) "callNative";
     func[0].functionData = NULL;
-    func[0].function = &callNative;
-    
+    func[0].function = &callNative;    
     *functionsToSet = func;
 }
 
-// ContextFinalizer()
-//
-// The context finalizer is called when the extension's ActionScript code
-// calls the ExtensionContext instance's dispose() method.
-// If the AIR runtime garbage collector disposes of the ExtensionContext instance, the runtime also calls
-// ContextFinalizer().
-
 void ContextFinalizer(FREContext ctx) {
     
-    NSLog(@"Entering ContextFinalizer()");
-    
-    // TODO
-    
-    NSLog(@"Exiting ContextFinalizer()");
-    
+    NSLog(@"Entering ContextFinalizer()");    
+    // TODO    
+    NSLog(@"Exiting ContextFinalizer()");    
     return;
 }
 
-// ExtInitializer()
-//
-// The extension initializer is called the first time the ActionScript side of the extension
-// calls ExtensionContext.createExtensionContext() for any context.
-
-void ExtInitializer(void** extDataToSet, FREContextInitializer* ctxInitializerToSet,
-                    FREContextFinalizer* ctxFinalizerToSet) {
-    
-    NSLog(@"Entering ExtInitializer()");
-    
+void ClientExtensionInitializer(void** extDataToSet, FREContextInitializer* ctxInitializerToSet,
+                    FREContextFinalizer* ctxFinalizerToSet) {    
+    NSLog(@"Entering ClientExtensionInitializer()");    
     *extDataToSet = NULL;
     *ctxInitializerToSet = &ContextInitializer;
-    *ctxFinalizerToSet = &ContextFinalizer;
-    
-    NSLog(@"Exiting ExtInitializer()");
+    *ctxFinalizerToSet = &ContextFinalizer;    
+    NSLog(@"Exiting ClientExtensionInitializer()");
 }
 
-// ExtFinalizer()
-//
-// The extension finalizer is called when the runtime unloads the extension. However, it is not always called.
-
-void ExtFinalizer(void* extData) {
+void ClientExtensionFinalizer(void* extData) {
     
-    NSLog(@"Entering ExtFinalizer()");
-    
-    // Nothing to clean up.
-    
-    NSLog(@"Exiting ExtFinalizer()");
+    NSLog(@"ClientExtensionFinalizer()");    
+    // Nothing to clean up.    
+    NSLog(@"Exiting ClientExtensionFinalizer()");
     return;
 }

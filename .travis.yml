@@ -32,8 +32,5 @@ git:
 
 language: objective-c
 
-env:
-    - TERM=dumb
-
 script:
     - /usr/bin/xcodebuild -project ios/ClientExtension.xcodeproj -scheme ClientExtension build
