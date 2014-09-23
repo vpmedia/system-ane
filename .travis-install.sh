@@ -12,8 +12,8 @@ if [[ "$DARWIN" = true ]]; then
 	brew update >brew-update.log
 	# Install Brew Packages silently
 	brew install gradle adobe-air-sdk >brew-install.log
-	brew install android-sdk
-	brew install android-ndk
+	# brew install android-sdk
+	# brew install android-ndk
 	# Adobe Flash Player for CLI
 	brew install caskroom/cask/brew-cask
 	brew cask install flash-player-debugger
@@ -32,7 +32,7 @@ if [[ "$DARWIN" = true ]]; then
 	cp -f /usr/local/opt/adobe-air-sdk/libexec/frameworks/libs/player/15.0/playerglobal.swc flex_sdk/frameworks/libs/player/11.1/
 	cp -f /usr/local/opt/adobe-air-sdk/libexec/frameworks/libs/player/15.0/playerglobal.swc flex_sdk/frameworks/libs/player/15.0/
 	# Init Android SDK
-	echo yes | android update sdk --filter platform-tools,android-20,build-tools-20.0.0 --force --no-ui > /dev/null
+	# echo yes | android update sdk --filter platform-tools,android-20,build-tools-20.0.0 --force --no-ui > /dev/null
 	# Set env. variable used by Gradle
 	export FLEX_HOME="$TRAVIS_BUILD_DIR/flex_sdk"
 	# Init Adobe AIR SDK
