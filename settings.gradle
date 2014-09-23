@@ -39,7 +39,7 @@ if (Os.isFamily(Os.FAMILY_WINDOWS)) {
 if("${System.env.NDK_HOME}" != "null" 
     || "${System.env.ANDROID_NDK_ROOT}" != "null"
     || "${System.env.ANDROID_NDK_HOME}" != "null"
-    || new File(projectDir, 'local.properties').exists()
+    || new File('local.properties').exists()
    ) 
 {
     include 'android'
