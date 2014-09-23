@@ -49,6 +49,9 @@ extern "C" {
 //  API
 //----------------------------------
 
+// The extension command handler method
+FREObject callNative(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[] );
+
 // The context initializer is called when the runtime creates the extension context instance.
 void ContextInitializer(void* extData, const uint8_t* ctxType, FREContext ctx, uint32_t* numFunctionsToTest, const FRENamedFunction** functionsToSet);
 
