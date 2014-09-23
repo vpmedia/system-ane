@@ -1,9 +1,5 @@
-system-ane
+system-ane [![Build Status](https://travis-ci.org/ane-community/system-ane.png?branch=master)](https://travis-ci.org/ane-community/system-ane)
 ==========
-
-[![Build Status](https://travis-ci.org/ane-community/system-ane.png?branch=master)](https://travis-ci.org/ane-community/system-ane)
-
-## Introduction
 
 AIR Native Extension for core System APIs
 

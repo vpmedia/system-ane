@@ -27,6 +27,7 @@
 // =END MIT LICENSE
 //
 
+// Filter OS specific modules
 import org.apache.tools.ant.taskdefs.condition.Os
 if (Os.isFamily(Os.FAMILY_WINDOWS)) {
     include 'windows'
@@ -34,4 +35,14 @@ if (Os.isFamily(Os.FAMILY_WINDOWS)) {
     include 'ios'
 }
 
-include 'android', 'extension', 'tester'
+// Check for Android NDK 
+if("${System.env.NDK_HOME}" != "null" 
+    || "${System.env.ANDROID_NDK_ROOT}" != "null"
+    || "${System.env.ANDROID_NDK_HOME}" != "null"
+    || new File(projectDir, 'local.properties').exists()
+   ) 
+{
+    include 'android'
+}
+
+include 'extension', 'tester'
