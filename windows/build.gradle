@@ -82,7 +82,7 @@ binaries.withType(SharedLibraryBinary) {
     if (toolChain in Gcc) {
         cppCompiler.args '-Wall', '-O4', '-Wno-unused-function', '-Wno-unused-value', '-Wno-unused-variable', '-Wno-parentheses', '-Wno-unknown-pragmas', '-Wno-maybe-uninitialized'
         cppCompiler.define 'EXPORT'
-        linker.args '-shared', '-static-libgcc', '-static-libstdc++', '-Wl,--subsystem,windows,--output-def,ClientExtension.def,--out-implib,libClientExtension.a'
+        linker.args '-shared', '-static-libgcc', '-static-libstdc++', '-Wl,--subsystem,windows,--output-def,build/ClientExtension.def,--out-implib,build/libClientExtension.a'
     }
 }
 

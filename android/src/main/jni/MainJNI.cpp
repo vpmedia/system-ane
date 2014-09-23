@@ -44,7 +44,7 @@ extern "C" {
       Java_com_docmet_extensions_CommandCallNative_callNative
       (JNIEnv *env, jobject obj, jint type, jint argc, jobjectArray argv)
       {
-            return env->NewStringUTF("NativeCall!");
+            return env->NewStringUTF("1");
       }
 }
 

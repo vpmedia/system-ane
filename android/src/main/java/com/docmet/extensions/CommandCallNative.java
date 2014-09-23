@@ -37,6 +37,9 @@ import com.adobe.fre.FREFunction;
 import com.adobe.fre.FREObject;
 
 import android.util.Log;
+import android.app.Activity;
+import android.content.Context;
+import android.os.Vibrator;
 
 /**
  * Global API wrapper.
@@ -58,11 +61,21 @@ public class CommandCallNative implements FREFunction  {
             FREObject typeObj = passedArgs[0];
             int type = typeObj.getAsInt();
             List<String> nativeList = new ArrayList<String>();
-            //nativeList.add("passedArgs 1..N");
+            int n = passedArgs.length;
+            if(n > 0) {
+                int i;
+                for(i = 1; i < n; i++) {
+                    nativeList.add(passedArgs[i].getAsString());                
+                }            
+            }
             String[] nativeArgs = nativeList.toArray(new String[nativeList.size()]);
             commandResult = callNative(type, nativeArgs.length, nativeArgs);
             Log.d(TAG, "call: " + Integer.toString(type) + " => " + commandResult);
-            result = FREObject.newObject(commandResult);
+            result = FREObject.newObject(commandResult);            
+            // Vibrate test
+            Activity activity = ctx.getActivity();
+            Vibrator vibrator = (Vibrator) activity.getSystemService(Context.VIBRATOR_SERVICE);
+            vibrator.vibrate(1);
         } catch (Exception e) {
             Log.d(TAG, "error: " + e.getMessage());
         }

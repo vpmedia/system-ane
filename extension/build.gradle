@@ -217,7 +217,12 @@ task package_init << {
         into tempDir.absolutePath + '/libs'
     }    
     ant.copy(file: '../android/build/intermediates/bundles/release/classes.jar', tofile: tempDir.absolutePath + '/ClientExtension.jar') 
-    ant.copy(file: '../windows/ClientExtension.dll', tofile: tempDir.absolutePath + '/ClientExtension.dll')
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        ant.copy(file: '../windows/build/binaries/mainSharedLibrary/main.dll', tofile: tempDir.absolutePath + '/ClientExtension.dll')    
+        ant.copy(file: '../windows/build/binaries/mainSharedLibrary/main.dll', tofile: '../cached/ClientExtension.dll')  
+    } else {
+        ant.copy(file: '../cached/ClientExtension.dll', tofile: tempDir.absolutePath + '/ClientExtension.dll')        
+    }
 }
 
 task package_ane(type: JavaExec) {

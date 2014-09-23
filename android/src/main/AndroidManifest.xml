@@ -30,7 +30,7 @@
  ~
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.docmet.botan_crypto">
+    package="com.docmet.system">
     <application android:allowBackup="true"
         android:label="@string/app_name"
         android:icon="@drawable/ic_launcher"

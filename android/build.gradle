@@ -70,7 +70,7 @@ android {
             moduleName "MainJNI"
             stl "stlport_static"
             ldLibs "log"
-            cFlags "-DBOTAN_USE_GCC_INLINE_ASM=0 -fexceptions -frtti"
+            cFlags ""
         }
     }
 }
