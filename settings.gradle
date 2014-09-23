@@ -35,14 +35,9 @@ if (Os.isFamily(Os.FAMILY_WINDOWS)) {
     include 'ios'
 }
 
-// Check for Android NDK 
-if("${System.env.NDK_HOME}" != "null" 
-    || "${System.env.ANDROID_NDK_ROOT}" != "null"
-    || "${System.env.ANDROID_NDK_HOME}" != "null"
-    || new File('local.properties').exists()
-   ) 
-{
+// Skip Android on Travis CI
+if("${System.env.TRAVIS}" == "null") {
     include 'android'
-}
+} 
 
 include 'extension', 'tester'
