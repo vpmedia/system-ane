@@ -39,4 +39,4 @@ before_script:
     - ./.travis-install.sh
 
 script:
-    - ./build.sh
+    - ./.travis-build.sh
