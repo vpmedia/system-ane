@@ -68,9 +68,7 @@ dependencies {
     test group: 'commons-lang', name: 'commons-lang', version: '2.4', ext: 'jar'
     test group: 'org.codehaus.plexus', name: 'plexus-utils', version: '3.0.17', ext: 'jar'
     antClassPath 'ant-contrib:ant-contrib:1.0b3', 'org.apache.ant:ant-junit:1.9.4'
-    if("${System.env.TRAVIS}" == "null") {
-        compile project(':android')
-    }   
+    compile project(':android')
 }
 
 if (Os.isFamily(Os.FAMILY_WINDOWS)) {

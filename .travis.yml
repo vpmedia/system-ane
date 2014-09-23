@@ -35,8 +35,5 @@ language: objective-c
 env:
     - TERM=dumb
 
-before_script:
-    - ./.travis-install.sh
-
 script:
-    - ./.travis-build.sh
+    - /usr/bin/xcodebuild -project ios/ClientExtension.xcodeproj -scheme ClientExtension build

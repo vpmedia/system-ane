@@ -35,9 +35,4 @@ if (Os.isFamily(Os.FAMILY_WINDOWS)) {
     include 'ios'
 }
 
-// Skip Android on Travis CI
-if("${System.env.TRAVIS}" == "null") {
-    include 'android'
-} 
-
-include 'extension', 'tester'
+include 'android', 'extension', 'tester'
