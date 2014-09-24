@@ -34,6 +34,9 @@ publish/
 temp/
 out/
 
+# XCode
+xcuserdata/
+
 # Gradle
 .gradle/
 local.properties
@@ -50,3 +53,5 @@ local.properties
 *.exe
 *.lib
 *.def
+common/Makefile
+botan_all.*
