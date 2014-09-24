@@ -32,6 +32,7 @@ build/
 bin/
 publish/
 temp/
+out/
 
 # Gradle
 .gradle/

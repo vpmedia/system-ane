@@ -37,9 +37,13 @@ import com.adobe.fre.FREFunction;
 import com.adobe.fre.FREObject;
 
 import android.util.Log;
+
 import android.app.Activity;
 import android.content.Context;
+
 import android.os.Vibrator;
+
+import android.provider.Settings.Secure;
 
 /**
  * Global API wrapper.
@@ -76,6 +80,8 @@ public class CommandCallNative implements FREFunction  {
             Activity activity = ctx.getActivity();
             Vibrator vibrator = (Vibrator) activity.getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(1);
+            // SecureId test
+            String secureId = Secure.getString(activity.getContentResolver(), Secure.ANDROID_ID);
         } catch (Exception e) {
             Log.d(TAG, "error: " + e.getMessage());
         }
