@@ -8,10 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		BFD1268B14EBB7D800042533 /* ClientExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD1268A14EBB7D800042533 /* ClientExtension.m */; };
-		BFD1269314EBB7D800042533 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFD1269214EBB7D800042533 /* SenTestingKit.framework */; };
-		BFD1269514EBB7D800042533 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFD1269414EBB7D800042533 /* UIKit.framework */; };
-		BFD1269614EBB7D800042533 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFD1268414EBB7D800042533 /* Foundation.framework */; };
-		BFD1269914EBB7D800042533 /* libClientExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFD1268114EBB7D700042533 /* libClientExtension.a */; };
 		BFD1269F14EBB7D800042533 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BFD1269D14EBB7D800042533 /* InfoPlist.strings */; };
 		BFD126A214EBB7D800042533 /* ClientExtensionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD126A114EBB7D800042533 /* ClientExtensionTests.m */; };
 		BFD126AC14EBB90700042533 /* FlashRuntimeExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = BFD126AB14EBB90700042533 /* FlashRuntimeExtensions.h */; };
@@ -32,9 +28,7 @@
 		BFD1268414EBB7D800042533 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BFD1268814EBB7D800042533 /* ClientExtension-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ClientExtension-Prefix.pch"; sourceTree = "<group>"; };
 		BFD1268A14EBB7D800042533 /* ClientExtension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClientExtension.m; sourceTree = "<group>"; };
-		BFD1269114EBB7D800042533 /* ClientExtensionTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ClientExtensionTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		BFD1269214EBB7D800042533 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		BFD1269414EBB7D800042533 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		BFD1269114EBB7D800042533 /* ClientExtensionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ClientExtensionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFD1269C14EBB7D800042533 /* ClientExtensionTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ClientExtensionTests-Info.plist"; sourceTree = "<group>"; };
 		BFD1269E14EBB7D800042533 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BFD126A014EBB7D800042533 /* ClientExtensionTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClientExtensionTests.h; sourceTree = "<group>"; };
@@ -54,10 +48,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BFD1269314EBB7D800042533 /* SenTestingKit.framework in Frameworks */,
-				BFD1269514EBB7D800042533 /* UIKit.framework in Frameworks */,
-				BFD1269614EBB7D800042533 /* Foundation.framework in Frameworks */,
-				BFD1269914EBB7D800042533 /* libClientExtension.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,7 +68,7 @@
 			isa = PBXGroup;
 			children = (
 				BFD1268114EBB7D700042533 /* libClientExtension.a */,
-				BFD1269114EBB7D800042533 /* ClientExtensionTests.octest */,
+				BFD1269114EBB7D800042533 /* ClientExtensionTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -87,8 +77,6 @@
 			isa = PBXGroup;
 			children = (
 				BFD1268414EBB7D800042533 /* Foundation.framework */,
-				BFD1269214EBB7D800042533 /* SenTestingKit.framework */,
-				BFD1269414EBB7D800042533 /* UIKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -177,8 +165,8 @@
 			);
 			name = ClientExtensionTests;
 			productName = ClientExtensionTests;
-			productReference = BFD1269114EBB7D800042533 /* ClientExtensionTests.octest */;
-			productType = "com.apple.product-type.bundle.ocunit-test";
+			productReference = BFD1269114EBB7D800042533 /* ClientExtensionTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -386,13 +374,12 @@
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ClientExtension/ClientExtension-Prefix.pch";
 				INFOPLIST_FILE = "ClientExtensionTests/ClientExtensionTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
 		};
@@ -401,13 +388,12 @@
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ClientExtension/ClientExtension-Prefix.pch";
 				INFOPLIST_FILE = "ClientExtensionTests/ClientExtensionTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
 		};

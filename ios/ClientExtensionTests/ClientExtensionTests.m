@@ -18,7 +18,7 @@
 
 - (void)testExample
 {
-    STFail(@"Unit tests are not implemented yet in ClientExtensionTests");
+    XCTFail(@"Unit tests are not implemented yet in ClientExtensionTests");
 }
 
 @end
