@@ -59,9 +59,19 @@
             <manifest android:installLocation="auto">
                 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> 
                 <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+                <uses-permission android:name="android.permission.BLUETOOTH" />
+                <uses-permission android:name="android.permission.BATTERY_STATS" />
+                <uses-permission android:name="android.permission.CAMERA" />
                 <uses-permission android:name="android.permission.DISABLE_KEYGUARD" /> 
+                <uses-permission android:name="android.permission.FLASHLIGHT" />
                 <uses-permission android:name="android.permission.INTERNET" /> 
+                <uses-permission android:name="android.permission.LOCATION_HARDWARE" />
                 <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+                <uses-permission android:name="android.permission.READ_PROFILE" />
+                <uses-permission android:name="android.permission.READ_CALENDAR" />
+                <uses-permission android:name="android.permission.STATUS_BAR" />
+                <uses-permission android:name="android.permission.TRANSMIT_IR" />
+                <uses-permission android:name="android.permission.VIBRATE" />
                 <uses-permission android:name="android.permission.WAKE_LOCK" /> 
                 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> 
                 <uses-feature android:required="true" android:name="android.hardware.touchscreen.multitouch"/>

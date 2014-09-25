@@ -211,11 +211,7 @@ task package_init << {
         def swcFile = file(buildDir.absolutePath + '/Main.swc')
         from zipTree(swcFile)
         into tempDir    
-    }  
-    copy {
-        from '../android/build/intermediates/bundles/release/jni'
-        into tempDir.absolutePath + '/libs'
-    }    
+    }   
     ant.copy(file: '../android/build/intermediates/bundles/release/classes.jar', tofile: tempDir.absolutePath + '/ClientExtension.jar') 
     if (Os.isFamily(Os.FAMILY_WINDOWS)) {
         ant.copy(file: '../windows/build/binaries/mainSharedLibrary/main.dll', tofile: tempDir.absolutePath + '/ClientExtension.dll')    
@@ -249,12 +245,10 @@ task package_ane(type: JavaExec) {
         'Android-ARM',
         'library.swf',
         'ClientExtension.jar',
-        'libs',
         '-platform',
         'Android-x86',
         'library.swf',
         'ClientExtension.jar',
-        'libs',
         '-platform',
         'Windows-x86',
         'library.swf',

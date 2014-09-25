@@ -39,6 +39,7 @@ import flash.filesystem.StorageVolumeInfo;
 import flash.text.TextField;
 import flash.text.TextFormat;
 import flash.utils.getTimer;
+import flash.utils.setTimeout;
 
 /**
  * ANE Tester Client Document Class
@@ -102,7 +103,10 @@ public class Main extends Sprite {
             message = "ANE::" + message;
             log(message);
         });
+
+        // test calls
         extension.callNative(1);
+        extension.callNative(2);
     }
 
     /**

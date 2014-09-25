@@ -56,8 +56,8 @@ public class CommandCallNative implements FREFunction  {
     private static final String TAG = "[CommandCallNative]";
     
     // Commands
-    private static final int EXT_VIBRATE = 1;
-    private static final int EXT_GET_DEVICE_ID = 2;
+    private static final int EXT_GET_DEVICE_ID = 1;
+    private static final int EXT_VIBRATE = 2;
     
     /*
      * Command entry point
@@ -99,7 +99,7 @@ public class CommandCallNative implements FREFunction  {
      */ 
     private int extVibrate(Activity activity) {
         Vibrator vibrator = (Vibrator) activity.getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.vibrate(1);
+        vibrator.vibrate(500);
         return 1;
     }
 }

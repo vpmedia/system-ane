@@ -21,11 +21,10 @@ AIR Native Extension for core System APIs
 
 > Setting the **MINGW_HOME** and **MSYS_HOME** env. variables is essential
 
-* Android SDK and NDK (Android)
+* Android SDK
 
 > Create a **local.properties** file in the source root
 
-    ndk.dir=c:\\android-studio\\ndk
     sdk.dir=c:\\android-studio\\sdk
 
 * XCode (iOS)
