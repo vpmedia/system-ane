@@ -65,13 +65,6 @@ android {
     defaultConfig {
         minSdkVersion 20
         targetSdkVersion 20
-        
-        ndk {
-            moduleName "MainJNI"
-            stl "stlport_static"
-            ldLibs "log"
-            cFlags ""
-        }
     }
 }
 

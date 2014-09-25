@@ -55,48 +55,51 @@ public class CommandCallNative implements FREFunction  {
      */ 
     private static final String TAG = "[CommandCallNative]";
     
+    // Commands
+    private static final int EXT_VIBRATE = 1;
+    private static final int EXT_GET_DEVICE_ID = 2;
+    
     /*
      * Command entry point
      */ 
     public FREObject call(FREContext ctx, FREObject[] passedArgs) {
         FREObject result = null;
-        String commandResult = null;
+        String commandResult = null;        
         try {
-            FREObject typeObj = passedArgs[0];
-            int type = typeObj.getAsInt();
-            List<String> nativeList = new ArrayList<String>();
-            int n = passedArgs.length;
-            if(n > 0) {
-                int i;
-                for(i = 1; i < n; i++) {
-                    nativeList.add(passedArgs[i].getAsString());                
-                }            
-            }
-            String[] nativeArgs = nativeList.toArray(new String[nativeList.size()]);
-            commandResult = callNative(type, nativeArgs.length, nativeArgs);
-            Log.d(TAG, "call: " + Integer.toString(type) + " => " + commandResult);
-            result = FREObject.newObject(commandResult);            
-            // Vibrate test
             Activity activity = ctx.getActivity();
-            Vibrator vibrator = (Vibrator) activity.getSystemService(Context.VIBRATOR_SERVICE);
-            vibrator.vibrate(1);
-            // SecureId test
-            String secureId = Secure.getString(activity.getContentResolver(), Secure.ANDROID_ID);
+            FREObject typeObj = passedArgs[0];
+            int type = typeObj.getAsInt();            
+            switch (type) {
+                case EXT_VIBRATE:
+                        result = FREObject.newObject(extVibrate(activity));
+                        break;
+                case EXT_GET_DEVICE_ID:  
+                        result = FREObject.newObject(extGetSecureId(activity));
+                        break;
+                default: 
+                        result = FREObject.newObject(0);
+                        break;
+            }
         } catch (Exception e) {
             Log.d(TAG, "error: " + e.getMessage());
         }
         return result;
-    }    
-      
-    /*
-     * JNI Example
-     */ 
-    public native String callNative(int type, int argc, String[] argv);
+    } 
     
     /*
      * @private
      */ 
-    static {
-        System.loadLibrary("MainJNI");
+    private String extGetSecureId(Activity activity) {
+        String secureId = Secure.getString(activity.getContentResolver(), Secure.ANDROID_ID);
+        return secureId;
+    }
+
+    /*
+     * @private
+     */ 
+    private int extVibrate(Activity activity) {
+        Vibrator vibrator = (Vibrator) activity.getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.vibrate(1);
+        return 1;
     }
 }
