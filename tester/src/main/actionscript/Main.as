@@ -36,6 +36,7 @@ import flash.display.Sprite;
 import flash.display.StageAlign;
 import flash.display.StageScaleMode;
 import flash.events.Event;
+import flash.events.StatusEvent;
 import flash.filesystem.StorageVolume;
 import flash.filesystem.StorageVolumeInfo;
 import flash.text.TextField;
@@ -52,6 +53,11 @@ public class Main extends Sprite {
      * @private
      */
     private var extension:SystemExtension;
+
+    /**
+     * @private
+     */
+    private var headerLabel:TextField;
 
     /**
      * @private
@@ -97,12 +103,22 @@ public class Main extends Sprite {
         addChild(bg);
 
         // create log text field
+        headerLabel = new TextField();
+        headerLabel.width = sw;
+        headerLabel.height = 30;
+        headerLabel.multiline = true;
+        headerLabel.wordWrap = true;
+        headerLabel.defaultTextFormat = new TextFormat("Arial", 12, 0xFFFFFF);
+        addChild(headerLabel);
+
+        // create log text field
         messageLabel = new TextField();
         messageLabel.width = sw;
         messageLabel.height = sh;
+        messageLabel.y = 30;
         messageLabel.multiline = true;
         messageLabel.wordWrap = true;
-        messageLabel.defaultTextFormat = new TextFormat("Arial", 10, 0xFFFFFF);
+        messageLabel.defaultTextFormat = new TextFormat("Arial", 11, 0xFFFFFF);
         addChild(messageLabel);
 
         // create native extension context
@@ -111,18 +127,25 @@ public class Main extends Sprite {
             message = "ANE::" + message;
             log(message);
         });
+        extension.addEventListener(StatusEvent.STATUS, onExtensionStatus, false, 0, true);
 
         // test calls
-        extension.callNative(SystemExtension.EXT_GET_DEVICE_ID);
+        extension.callNative(SystemExtension.EXT_LOG, "Test Log Message");
+        extension.callNative(SystemExtension.EXT_DEVICE_ID);
         extension.callNative(SystemExtension.EXT_VIBRATE);
         extension.callNative(SystemExtension.EXT_NOTIFY, "Test Notification Message");
-        extension.callNative(SystemExtension.EXT_START_BAROMETER_LISTENER);
-        extension.callNative(SystemExtension.EXT_START_BATTERY_LISTENER);
-        extension.callNative(SystemExtension.EXT_START_GRAVITY_LISTENER);
-        extension.callNative(SystemExtension.EXT_START_GYROSCOPE_LISTENER);
-        extension.callNative(SystemExtension.EXT_START_MAGNETOMETER_LISTENER);
-        extension.callNative(SystemExtension.EXT_START_ORIENTATION_LISTENER);
-        extension.callNative(SystemExtension.EXT_START_PROXIMITY_LISTENER);
+        //extension.callNative(SystemExtension.EXT_START_SENSOR, SystemExtension.EXT_SENSOR_TYPE_ACCELEROMETER);
+        //extension.callNative(SystemExtension.EXT_START_SENSOR, SystemExtension.EXT_SENSOR_TYPE_GRAVITY);
+        //extension.callNative(SystemExtension.EXT_START_SENSOR, SystemExtension.EXT_SENSOR_TYPE_ORIENTATION);
+        //extension.callNative(SystemExtension.EXT_START_SENSOR, SystemExtension.EXT_SENSOR_TYPE_PRESSURE);
+        extension.callNative(SystemExtension.EXT_START_SENSOR, SystemExtension.EXT_SENSOR_TYPE_PROXIMITY);
+    }
+
+    /**
+     * @private
+     */
+    private function onExtensionStatus(event:StatusEvent):void {
+        headerLabel.text = event.code + " : " + event.level;
     }
 
     /**

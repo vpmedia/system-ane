@@ -37,49 +37,35 @@ import com.adobe.fre.FREFunction;
 
 import android.app.Activity;
 import android.app.NotificationManager;
-import android.hardware.SensorManager;
-import android.hardware.Sensor;
+
 import android.content.Context;
+
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+
 import android.util.Log;
 
 /**
  * This class specifies the mapping between the AS3 functions and the Java native classes.
  *
  * @see http://help.adobe.com/en_US/air/extensions/WS39e706a46ad531be-fd70de2132a8f3874e-8000.html
+ * @see https://developer.android.com/reference/android/hardware/Sensor.html
  */
-public class ClientExtensionContext extends FREContext {
+public class ClientExtensionContext extends FREContext implements SensorEventListener  {
 
     /*
      * @private
      */ 
     private static final String TAG = "[ClientExtensionContext]";
-    
-    public NotificationManager notificationManager;
-    public SensorManager sensorManager;
-    public Sensor ambientLightSensor;
-    public Sensor barometerSensor;
-    public Sensor gravitySensor;
-    public Sensor gyroscopeSensor;
-    public Sensor magnetometerSensor;
-    public Sensor orientationSensor;
-    public Sensor proximitySensor;
-    
-    /*
-     * @inheritDoc
-     */
-    @Override
-    public void dispose() {
-        Log.d(TAG, "dispose");
-        sensorManager = null;
-    }
-    
+        
     /*
      * Initializer method
      */
     public void initialize() {
         Log.d(TAG, "initialize");
-        sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE); 
-        
+           
         /*IntentFilter batteryLevelFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
         registerReceiver(batteryLevelReceiver, batteryLevelFilter);
         BroadcastReceiver batteryLevelReceiver = new BroadcastReceiver(){
@@ -96,6 +82,14 @@ public class ClientExtensionContext extends FREContext {
      * @inheritDoc
      */
     @Override
+    public void dispose() {
+        Log.d(TAG, "dispose");
+    }
+    
+    /*
+     * @inheritDoc
+     */
+    @Override
     public Map<String, FREFunction> getFunctions() {
         // create wrapper map
         Map<String, FREFunction> functionMap = new HashMap<String, FREFunction>();
@@ -104,4 +98,46 @@ public class ClientExtensionContext extends FREContext {
         // return map
         return functionMap;
     }
+    
+    /*
+     * Attach a sensor listener
+     */
+    public void addSensorListener(int sensorType) {        
+        SensorManager sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE); 
+        sensorManager.registerListener(this, sensorManager.getDefaultSensor(sensorType), SensorManager.SENSOR_DELAY_GAME);               
+    }
+    
+    /*
+     * Detach a sensor listener
+     */
+    public void removeSensorListener(int sensorType) {
+        SensorManager sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);   
+        sensorManager.unregisterListener(this, sensorManager.getDefaultSensor(sensorType));           
+    }
+    
+    /*
+     * Implements SensorEventListener.onAccuracyChanged
+     */
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {   
+        try {    
+            String sensorEventType = "ACCURACY_CHANGE_" + Integer.toString(sensor.getType());          
+            dispatchStatusEventAsync(sensorEventType, Integer.toString(accuracy));                        
+        } catch (Exception e) {
+            Log.d(TAG, "error: " + e.getMessage());
+        }
+    }
+
+    /*
+     * Implements SensorEventListener.onSensorChanged
+     */
+    public void onSensorChanged(SensorEvent event) {     
+        try {                            
+            Sensor sensor = event.sensor;       
+            String sensorEventType = "VALUE_CHANGE_" + Integer.toString(sensor.getType()); 
+            float sensorLevel = event.values[0];
+            dispatchStatusEventAsync(sensorEventType, Float.toString(sensorLevel)); 
+        } catch (Exception e) {
+            Log.d(TAG, "error: " + e.getMessage());
+        }               
+    } 
 }

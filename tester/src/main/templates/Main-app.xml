@@ -59,8 +59,11 @@
             <manifest android:installLocation="auto">
                 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> 
                 <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+                <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+                <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
                 <uses-permission android:name="android.permission.BLUETOOTH" />
                 <uses-permission android:name="android.permission.BATTERY_STATS" />
+                <uses-permission android:name="android.permission.BODY_SENSORS" />
                 <uses-permission android:name="android.permission.CAMERA" />
                 <uses-permission android:name="android.permission.DISABLE_KEYGUARD" /> 
                 <uses-permission android:name="android.permission.FLASHLIGHT" />
@@ -74,7 +77,20 @@
                 <uses-permission android:name="android.permission.VIBRATE" />
                 <uses-permission android:name="android.permission.WAKE_LOCK" /> 
                 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> 
-                <uses-feature android:required="true" android:name="android.hardware.touchscreen.multitouch"/>
+                <uses-feature android:name="android.hardware.touchscreen.multitouch" />
+                <uses-feature android:name="android.hardware.bluetooth" />
+                <uses-feature android:name="android.hardware.camera" />
+                <uses-feature android:name="android.hardware.microphone" />
+                <uses-feature android:name="android.hardware.location" />
+                <uses-feature android:name="android.hardware.sensor.accelerometer" />
+                <uses-feature android:name="android.hardware.sensor.barometer" />
+                <uses-feature android:name="android.hardware.sensor.compass" />
+                <uses-feature android:name="android.hardware.sensor.gyroscope" />
+                <uses-feature android:name="android.hardware.sensor.light" />
+                <uses-feature android:name="android.hardware.sensor.proximity" />
+                <uses-feature android:name="android.hardware.sensor.stepcounter" />
+                <uses-feature android:name="android.hardware.sensor.stepdetector" />
+                <uses-feature android:name="android.hardware.wifi" />
                 <application android:hardwareAccelerated="true"/> 
             </manifest>            
         ]]>

@@ -69,89 +69,41 @@ public class SystemExtension extends EventDispatcher {
     //----------------------------------
 
     /**
-     * TBD
+     * Keep in sync with CommandCallNative.java command types
      */
-    public static const EXT_GET_DEVICE_ID:uint = 1;  
+    public static const EXT_LOG:uint = 1; 
+    public static const EXT_DEVICE_ID:uint = 2; 
+    public static const EXT_VIBRATE:uint = 3;  
+    public static const EXT_NOTIFY:uint = 4;
+    public static const EXT_START_SENSOR:uint = 5;
+    public static const EXT_STOP_SENSOR:uint = 6;
+    public static const EXT_HAS_SENSOR:uint = 7;
     
     /**
-     * TBD
+     * @see https://developer.android.com/reference/android/hardware/Sensor.html
      */
-    public static const EXT_VIBRATE:uint = 2;   
-    
-    /**
-     * TBD
-     */
-    public static const EXT_NOTIFY:uint = 3;
-    
-    /**
-     * TBD
-     */
-    public static const EXT_START_BAROMETER_LISTENER:uint = 100;
-    
-    /**
-     * TBD
-     */
-    public static const EXT_STOP_BAROMETER_LISTENER:uint = 101;
-    
-    /**
-     * TBD
-     */
-    public static const EXT_START_BATTERY_LISTENER:uint = 200;
-    
-    /**
-     * TBD
-     */
-    public static const EXT_STOP_BATTERY_LISTENER:uint = 201;
-      
-    /**
-     * TBD
-     */  
-    public static const EXT_START_GRAVITY_LISTENER:uint = 300;
-    
-    /**
-     * TBD
-     */
-    public static const EXT_STOP_GRAVITY_LISTENER:uint = 301;
-       
-    /**
-     * TBD
-     */     
-    public static const EXT_START_GYROSCOPE_LISTENER:uint = 400;
-    
-    /**
-     * TBD
-     */
-    public static const EXT_STOP_GYROSCOPE_LISTENER:uint = 401;
-    
-    /**
-     * TBD
-     */
-    public static const EXT_START_MAGNETOMETER_LISTENER:uint = 500;
-    
-    /**
-     * TBD
-     */
-    public static const EXT_STOP_MAGNETOMETER_LISTENER:uint = 501;
-        
-    /**
-     * TBD
-     */
-    public static const EXT_START_ORIENTATION_LISTENER:uint = 600;
-    
-    /**
-     * TBD
-     */
-    public static const EXT_STOP_ORIENTATION_LISTENER:uint = 601;
-    
-    /**
-     * TBD
-     */
-    public static const EXT_START_PROXIMITY_LISTENER:uint = 700;
-    
-    /**
-     * TBD
-     */
-    public static const EXT_STOP_PROXIMITY_LISTENER:uint = 701;
+    public static const EXT_SENSOR_TYPE_ALL:uint = 0xffffffff;
+    public static const EXT_SENSOR_TYPE_ACCELEROMETER:uint = 0x00000001;
+    public static const EXT_SENSOR_TYPE_AMBIENT_TEMPERATURE:uint = 0x0000000d;
+    public static const EXT_SENSOR_TYPE_GAME_ROTATION_VECTOR:uint = 0x0000000f;
+    public static const EXT_SENSOR_TYPE_GEOMAGNETIC_ROTATION_VECTOR:uint = 0x00000014;
+    public static const EXT_SENSOR_TYPE_GRAVITY:uint = 0x00000009;
+    public static const EXT_SENSOR_TYPE_GYROSCOPE:uint = 0x00000004;
+    public static const EXT_SENSOR_TYPE_GYROSCOPE_UNCALIBRATED:uint = 0x00000010;
+    public static const EXT_SENSOR_TYPE_HEART_RATE:uint = 0x00000015;
+    public static const EXT_SENSOR_TYPE_LIGHT:uint = 0x00000005;
+    public static const EXT_SENSOR_TYPE_LINEAR_ACCELERATION:uint = 0x0000000a;
+    public static const EXT_SENSOR_TYPE_MAGNETIC_FIELD:uint = 0x00000002;
+    public static const EXT_SENSOR_TYPE_MAGNETIC_FIELD_UNCALIBRATED:uint = 0x0000000e;
+    public static const EXT_SENSOR_TYPE_ORIENTATION:uint = 0x00000003;
+    public static const EXT_SENSOR_TYPE_PRESSURE:uint = 0x00000006;
+    public static const EXT_SENSOR_TYPE_PROXIMITY:uint = 0x00000008;
+    public static const EXT_SENSOR_TYPE_RELATIVE_HUMIDITY:uint = 0x0000000c;
+    public static const EXT_SENSOR_TYPE_ROTATION_VECTOR:uint = 0x0000000b;
+    public static const EXT_SENSOR_TYPE_SIGNIFICANT_MOTION:uint = 0x00000011;
+    public static const EXT_SENSOR_TYPE_STEP_COUNTER:uint = 0x00000013;
+    public static const EXT_SENSOR_TYPE_STEP_DETECTOR:uint = 0x00000012;
+    public static const EXT_SENSOR_TYPE_STEP_TEMPERATURE:uint = 0x00000007;
 
     //----------------------------------
     //  Constructor
@@ -230,7 +182,10 @@ public class SystemExtension extends EventDispatcher {
      * @private
      */
     private function onStatus(event:StatusEvent):void {
-        loggingHandler("ClientExtension::onStatus: " + event.toString());
+        //loggingHandler("ClientExtension::onStatus: " + event.toString());
+        // TODO: is event.clone() needed here?!
+        // VPMedia: Since it's coming from the Native layer and we do not modify anything, I don't think so.
+        dispatchEvent(event);
     }
 
     //----------------------------------
