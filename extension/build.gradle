@@ -71,11 +71,7 @@ dependencies {
     compile project(':android')
 }
 
-if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-    project(":extension").afterEvaluate { 
-        extension -> extension.compile.dependsOn ':windows:package_all'
-    }
-} else {
+if (!Os.isFamily(Os.FAMILY_WINDOWS)) {
     project(":extension").afterEvaluate { 
         extension -> extension.compile.dependsOn ':ios:package_all'
     }
@@ -213,12 +209,11 @@ task package_init << {
         into tempDir    
     }   
     ant.copy(file: '../android/build/intermediates/bundles/release/classes.jar', tofile: tempDir.absolutePath + '/ClientExtension.jar') 
-    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-        ant.copy(file: '../windows/build/binaries/mainSharedLibrary/main.dll', tofile: tempDir.absolutePath + '/ClientExtension.dll')    
-        ant.copy(file: '../windows/build/binaries/mainSharedLibrary/main.dll', tofile: '../cached/ClientExtension.dll')  
-    } else {
-        ant.copy(file: '../cached/ClientExtension.dll', tofile: tempDir.absolutePath + '/ClientExtension.dll')        
-    }
+    //if (Os.isFamily(Os.FAMILY_WINDOWS)) {  
+    //    ant.copy(file: '../cached/ClientExtension.dll', tofile: tempDir.absolutePath + '/ClientExtension.dll') 
+    //} else {       
+    //    ant.copy(file: '../windows/build/binaries/mainSharedLibrary/main.dll', tofile: '../cached/ClientExtension.dll')  
+    //}
 }
 
 task package_ane(type: JavaExec) {
@@ -249,10 +244,6 @@ task package_ane(type: JavaExec) {
         'Android-x86',
         'library.swf',
         'ClientExtension.jar',
-        '-platform',
-        'Windows-x86',
-        'library.swf',
-        'ClientExtension.dll',
         '-platform',
         'default',
         'library.swf'

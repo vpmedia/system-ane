@@ -32,13 +32,6 @@
     <id>com.docmet.extensions.SystemExtension</id>
     <versionNumber>1.0.0</versionNumber>
     <platforms>
-        <platform name="Windows-x86">
-            <applicationDeployment>
-                <nativeLibrary>ClientExtension.dll</nativeLibrary>
-                <initializer>ClientExtensionInitializer</initializer>
-                <finalizer>ClientExtensionFinalizer</finalizer>
-            </applicationDeployment>
-        </platform>      
         <platform name="Android-ARM">
             <applicationDeployment>
                 <nativeLibrary>ClientExtension.jar</nativeLibrary>

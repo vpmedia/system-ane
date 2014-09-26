@@ -1,7 +1,7 @@
 system-ane [![Build Status](https://travis-ci.org/ane-community/system-ane.png?branch=master)](https://travis-ci.org/ane-community/system-ane)
 ==========
 
-AIR Native Extension for core System APIs
+AIR Native Extension for core Mobile System APIs
 
 ## Prerequisites
 
@@ -16,10 +16,6 @@ AIR Native Extension for core System APIs
 * Adobe AIR SDK (Flash)
 
 > Setting the **AIR_HOME** env. variable is essential
-
-* MingW and MSys (Windows)
-
-> Setting the **MINGW_HOME** and **MSYS_HOME** env. variables is essential
 
 * Android SDK
 

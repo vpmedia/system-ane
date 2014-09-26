@@ -81,12 +81,6 @@ def tempDir = new File(projectDir, '/temp')
 tempDir.mkdirs()
 def tempDirPath = tempDir.absolutePath
 
-def exeExt = '.dmg'
-import org.apache.tools.ant.taskdefs.condition.Os
-if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-    exeExt = '.exe'
-}
-
 //----------------------------------
 //  Tasks
 //----------------------------------
@@ -173,38 +167,7 @@ task package_init << {
 
 task package_move << {
     publishDir.mkdirs()
-    ant.move(file: "temp/Main" + exeExt, todir: publishDir)
     ant.move(file: "temp/Main.apk", todir: publishDir)
-}
-
-task package_exe(type: JavaExec) { 
-    main = "com.adobe.air.ADT"
-    classpath = files("${AIR_HOME}/lib/adt.jar")
-    workingDir = tempDir
-    def argsList = [
-        '-package',
-        '-keystore',
-        '../src/main/certs/gradlefx.p12',
-        '-storetype',
-        'pkcs12',
-        '-storepass',
-        'gradlefx',
-        '-tsa',
-        'none',
-        '-target',
-        'native',
-        'Main',
-        'Main-app.xml',
-        'Main.swf',
-        '-C',
-        '../src/main/assets',
-        '-C',
-        "${tempDirPath}",
-        'icons',
-        '-extdir',
-        '../../extension/publish'
-            ]
-    args = argsList
 }
 
 task package_apk(type: JavaExec) { 
@@ -259,8 +222,7 @@ compile_init.dependsOn copyDeps
 compile.dependsOn compile_init
 package_init.dependsOn compile
 package_apk.dependsOn package_init
-package_exe.dependsOn package_apk
-package_move.dependsOn package_exe
+package_move.dependsOn package_apk
 package_all.dependsOn package_move
 
 defaultTasks 'clean', 'package_all', 'analyze'

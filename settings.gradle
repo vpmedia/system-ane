@@ -29,9 +29,7 @@
 
 // Filter OS specific modules
 import org.apache.tools.ant.taskdefs.condition.Os
-if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-    include 'windows'
-} else {
+if (!Os.isFamily(Os.FAMILY_WINDOWS)) {
     include 'ios'
 }
 
