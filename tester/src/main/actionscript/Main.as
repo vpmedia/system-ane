@@ -33,6 +33,8 @@ import com.docmet.extensions.SystemExtension;
 
 import flash.display.Shape;
 import flash.display.Sprite;
+import flash.display.StageAlign;
+import flash.display.StageScaleMode;
 import flash.events.Event;
 import flash.filesystem.StorageVolume;
 import flash.filesystem.StorageVolumeInfo;
@@ -82,16 +84,22 @@ public class Main extends Sprite {
         removeEventListener(Event.ADDED_TO_STAGE, onAdded);
         addEventListener(Event.REMOVED_FROM_STAGE, onRemoved, false, 0, true);
 
+        stage.scaleMode = StageScaleMode.NO_SCALE;
+        stage.align = StageAlign.TOP_LEFT;
+
+        const sw:uint = stage.fullScreenWidth;
+        const sh:uint = stage.fullScreenHeight;
+
         var bg:Shape = new Shape();
         bg.graphics.beginFill(0x333333);
-        bg.graphics.drawRect(0, 0, 800, 300);
+        bg.graphics.drawRect(0, 0, sw, sh);
         bg.graphics.endFill();
         addChild(bg);
 
         // create log text field
         messageLabel = new TextField();
-        messageLabel.width = 800;
-        messageLabel.height = 300;
+        messageLabel.width = sw;
+        messageLabel.height = sh;
         messageLabel.multiline = true;
         messageLabel.wordWrap = true;
         messageLabel.defaultTextFormat = new TextFormat("Arial", 10, 0xFFFFFF);
@@ -105,8 +113,16 @@ public class Main extends Sprite {
         });
 
         // test calls
-        extension.callNative(1);
-        extension.callNative(2);
+        extension.callNative(SystemExtension.EXT_GET_DEVICE_ID);
+        extension.callNative(SystemExtension.EXT_VIBRATE);
+        extension.callNative(SystemExtension.EXT_NOTIFY, "Test Notification Message");
+        extension.callNative(SystemExtension.EXT_START_BAROMETER_LISTENER);
+        extension.callNative(SystemExtension.EXT_START_BATTERY_LISTENER);
+        extension.callNative(SystemExtension.EXT_START_GRAVITY_LISTENER);
+        extension.callNative(SystemExtension.EXT_START_GYROSCOPE_LISTENER);
+        extension.callNative(SystemExtension.EXT_START_MAGNETOMETER_LISTENER);
+        extension.callNative(SystemExtension.EXT_START_ORIENTATION_LISTENER);
+        extension.callNative(SystemExtension.EXT_START_PROXIMITY_LISTENER);
     }
 
     /**

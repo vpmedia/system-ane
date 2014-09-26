@@ -71,7 +71,87 @@ public class SystemExtension extends EventDispatcher {
     /**
      * TBD
      */
-    public static const EXT_SHA_512:uint = 1;
+    public static const EXT_GET_DEVICE_ID:uint = 1;  
+    
+    /**
+     * TBD
+     */
+    public static const EXT_VIBRATE:uint = 2;   
+    
+    /**
+     * TBD
+     */
+    public static const EXT_NOTIFY:uint = 3;
+    
+    /**
+     * TBD
+     */
+    public static const EXT_START_BAROMETER_LISTENER:uint = 100;
+    
+    /**
+     * TBD
+     */
+    public static const EXT_STOP_BAROMETER_LISTENER:uint = 101;
+    
+    /**
+     * TBD
+     */
+    public static const EXT_START_BATTERY_LISTENER:uint = 200;
+    
+    /**
+     * TBD
+     */
+    public static const EXT_STOP_BATTERY_LISTENER:uint = 201;
+      
+    /**
+     * TBD
+     */  
+    public static const EXT_START_GRAVITY_LISTENER:uint = 300;
+    
+    /**
+     * TBD
+     */
+    public static const EXT_STOP_GRAVITY_LISTENER:uint = 301;
+       
+    /**
+     * TBD
+     */     
+    public static const EXT_START_GYROSCOPE_LISTENER:uint = 400;
+    
+    /**
+     * TBD
+     */
+    public static const EXT_STOP_GYROSCOPE_LISTENER:uint = 401;
+    
+    /**
+     * TBD
+     */
+    public static const EXT_START_MAGNETOMETER_LISTENER:uint = 500;
+    
+    /**
+     * TBD
+     */
+    public static const EXT_STOP_MAGNETOMETER_LISTENER:uint = 501;
+        
+    /**
+     * TBD
+     */
+    public static const EXT_START_ORIENTATION_LISTENER:uint = 600;
+    
+    /**
+     * TBD
+     */
+    public static const EXT_STOP_ORIENTATION_LISTENER:uint = 601;
+    
+    /**
+     * TBD
+     */
+    public static const EXT_START_PROXIMITY_LISTENER:uint = 700;
+    
+    /**
+     * TBD
+     */
+    public static const EXT_STOP_PROXIMITY_LISTENER:uint = 701;
 
     //----------------------------------
     //  Constructor

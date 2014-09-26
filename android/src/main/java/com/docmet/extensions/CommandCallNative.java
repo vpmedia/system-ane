@@ -40,13 +40,14 @@ import android.util.Log;
 
 import android.app.Activity;
 import android.content.Context;
-
+import android.hardware.Sensor;
 import android.os.Vibrator;
-
 import android.provider.Settings.Secure;
 
 /**
  * Global API wrapper.
+ *
+ * @see http://help.adobe.com/en_US/air/extensions/WS24fe7069b89c5bc5-6148f737132a836f332-8000.html
  */
 public class CommandCallNative implements FREFunction  {
     
@@ -54,15 +55,39 @@ public class CommandCallNative implements FREFunction  {
      * @private
      */ 
     private static final String TAG = "[CommandCallNative]";
-    
-    // Commands
+        
     private static final int EXT_GET_DEVICE_ID = 1;
+    
     private static final int EXT_VIBRATE = 2;
+    
+    private static final int EXT_NOTIFY = 3;
+    
+    private static final int EXT_START_BAROMETER_LISTENER = 100;
+    private static final int EXT_STOP_BAROMETER_LISTENER = 101;
+    
+    private static final int EXT_START_BATTERY_LISTENER = 200;
+    private static final int EXT_STOP_BATTERY_LISTENER = 201;
+        
+    private static final int EXT_START_GRAVITY_LISTENER = 300;
+    private static final int EXT_STOP_GRAVITY_LISTENER = 301;
+            
+    private static final int EXT_START_GYROSCOPE_LISTENER = 400;
+    private static final int EXT_STOP_GYROSCOPE_LISTENER = 401;
+    
+    private static final int EXT_START_MAGNETOMETER_LISTENER = 500;
+    private static final int EXT_STOP_MAGNETOMETER_LISTENER = 501;
+        
+    private static final int EXT_START_ORIENTATION_LISTENER = 600;
+    private static final int EXT_STOP_ORIENTATION_LISTENER = 601;
+    
+    private static final int EXT_START_PROXIMITY_LISTENER = 700;
+    private static final int EXT_STOP_PROXIMITY_LISTENER = 701;
     
     /*
      * Command entry point
      */ 
     public FREObject call(FREContext ctx, FREObject[] passedArgs) {
+        //ClientExtensionContext clientExtensionContext = (ClientExtensionContext) ctx;
         FREObject result = null;
         String commandResult = null;        
         try {
@@ -76,6 +101,51 @@ public class CommandCallNative implements FREFunction  {
                 case EXT_GET_DEVICE_ID:  
                         result = FREObject.newObject(extGetSecureId(activity));
                         break;
+                case EXT_NOTIFY:
+                        result = FREObject.newObject(0);
+                        break;
+                case EXT_START_BAROMETER_LISTENER:
+                        result = FREObject.newObject(0);
+                        break;
+                case EXT_STOP_BAROMETER_LISTENER: 
+                        result = FREObject.newObject(0);
+                        break;   
+                case EXT_START_BATTERY_LISTENER:
+                        result = FREObject.newObject(0);
+                        break;
+                case EXT_STOP_BATTERY_LISTENER: 
+                        result = FREObject.newObject(0); 
+                        break;      
+                case EXT_START_GRAVITY_LISTENER:
+                        result = FREObject.newObject(0);
+                        break;
+                case EXT_STOP_GRAVITY_LISTENER:
+                        result = FREObject.newObject(0); 
+                        break;           
+                case EXT_START_GYROSCOPE_LISTENER:
+                        result = FREObject.newObject(0);
+                        break;
+                case EXT_STOP_GYROSCOPE_LISTENER: 
+                        result = FREObject.newObject(0);
+                        break;   
+                case EXT_START_MAGNETOMETER_LISTENER:
+                        result = FREObject.newObject(0);
+                        break;
+                case EXT_STOP_MAGNETOMETER_LISTENER:
+                        result = FREObject.newObject(0);
+                        break;     
+                case EXT_START_ORIENTATION_LISTENER:
+                        result = FREObject.newObject(0);
+                        break;
+                case EXT_STOP_ORIENTATION_LISTENER: 
+                        result = FREObject.newObject(0);   
+                        break;
+                case EXT_START_PROXIMITY_LISTENER:
+                        result = FREObject.newObject(0);
+                        break;
+                case EXT_STOP_PROXIMITY_LISTENER:
+                        result = FREObject.newObject(0);
+                        break;
                 default: 
                         result = FREObject.newObject(0);
                         break;
@@ -85,6 +155,8 @@ public class CommandCallNative implements FREFunction  {
         }
         return result;
     } 
+    
+    // TODO: move extMethods to separate class which is testable and not dependent on the AIR runtime.
     
     /*
      * @private

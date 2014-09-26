@@ -35,10 +35,17 @@ import java.util.Map;
 import com.adobe.fre.FREContext;
 import com.adobe.fre.FREFunction;
 
+import android.app.Activity;
+import android.app.NotificationManager;
+import android.hardware.SensorManager;
+import android.hardware.Sensor;
+import android.content.Context;
 import android.util.Log;
 
 /**
  * This class specifies the mapping between the AS3 functions and the Java native classes.
+ *
+ * @see http://help.adobe.com/en_US/air/extensions/WS39e706a46ad531be-fd70de2132a8f3874e-8000.html
  */
 public class ClientExtensionContext extends FREContext {
 
@@ -47,12 +54,42 @@ public class ClientExtensionContext extends FREContext {
      */ 
     private static final String TAG = "[ClientExtensionContext]";
     
+    public NotificationManager notificationManager;
+    public SensorManager sensorManager;
+    public Sensor ambientLightSensor;
+    public Sensor barometerSensor;
+    public Sensor gravitySensor;
+    public Sensor gyroscopeSensor;
+    public Sensor magnetometerSensor;
+    public Sensor orientationSensor;
+    public Sensor proximitySensor;
+    
     /*
      * @inheritDoc
      */
     @Override
     public void dispose() {
         Log.d(TAG, "dispose");
+        sensorManager = null;
+    }
+    
+    /*
+     * Initializer method
+     */
+    public void initialize() {
+        Log.d(TAG, "initialize");
+        sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE); 
+        
+        /*IntentFilter batteryLevelFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+        registerReceiver(batteryLevelReceiver, batteryLevelFilter);
+        BroadcastReceiver batteryLevelReceiver = new BroadcastReceiver(){
+            @Override
+            public void onReceive(Context context, Intent intent){
+                int level = i.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
+                int scale = i.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
+                float battPct = level/(float)scale;       
+            }
+        };*/
     }
 
     /*

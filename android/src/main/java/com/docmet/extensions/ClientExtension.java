@@ -36,6 +36,8 @@ import android.util.Log;
 
 /**
  * Initialization and finalization class of native extension.
+ *
+ * @see http://help.adobe.com/en_US/air/extensions/WS982b6f491d178e6d6565d9b1132a79a012f-7ffc.html
  */
 public class ClientExtension implements FREExtension {
     /*
@@ -55,6 +57,7 @@ public class ClientExtension implements FREExtension {
         Log.d(TAG, "createContext: " + extId);  
         if(context == null) {
             context = new ClientExtensionContext();
+            context.initialize();
         }
         return context;
     }
