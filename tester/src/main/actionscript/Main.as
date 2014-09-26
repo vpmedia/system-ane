@@ -134,10 +134,10 @@ public class Main extends Sprite {
         extension.callNative(SystemExtension.EXT_DEVICE_ID);
         extension.callNative(SystemExtension.EXT_VIBRATE);
         extension.callNative(SystemExtension.EXT_NOTIFY, "Test Notification Message");
-        //extension.callNative(SystemExtension.EXT_START_SENSOR, SystemExtension.EXT_SENSOR_TYPE_ACCELEROMETER);
-        //extension.callNative(SystemExtension.EXT_START_SENSOR, SystemExtension.EXT_SENSOR_TYPE_GRAVITY);
-        //extension.callNative(SystemExtension.EXT_START_SENSOR, SystemExtension.EXT_SENSOR_TYPE_ORIENTATION);
-        //extension.callNative(SystemExtension.EXT_START_SENSOR, SystemExtension.EXT_SENSOR_TYPE_PRESSURE);
+        extension.callNative(SystemExtension.EXT_START_SENSOR, SystemExtension.EXT_SENSOR_TYPE_ACCELEROMETER);
+        extension.callNative(SystemExtension.EXT_START_SENSOR, SystemExtension.EXT_SENSOR_TYPE_GRAVITY);
+        extension.callNative(SystemExtension.EXT_START_SENSOR, SystemExtension.EXT_SENSOR_TYPE_ORIENTATION);
+        extension.callNative(SystemExtension.EXT_START_SENSOR, SystemExtension.EXT_SENSOR_TYPE_PRESSURE);
         extension.callNative(SystemExtension.EXT_START_SENSOR, SystemExtension.EXT_SENSOR_TYPE_PROXIMITY);
     }
 
