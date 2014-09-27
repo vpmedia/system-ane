@@ -3,6 +3,10 @@ system-ane [![Build Status](https://travis-ci.org/ane-community/system-ane.png?b
 
 AIR Native Extension for core Mobile System APIs
 
+* Get Device Identifier
+* Send Messages (Log, Notification)
+* Listen for Sensors
+
 ## Prerequisites
 
 * JDK (Common)
