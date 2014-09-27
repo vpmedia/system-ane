@@ -335,8 +335,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = NO;
-				CONFIGURATION_BUILD_DIR = ../output;
-				CONFIGURATION_TEMP_DIR = ../out;
+				CONFIGURATION_BUILD_DIR = ../cached;
+				CONFIGURATION_TEMP_DIR = build;
 				DSTROOT = /tmp/ClientExtension.dst;
 				GCC_LINK_WITH_DYNAMIC_LIBRARIES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -345,6 +345,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				LINK_WITH_STANDARD_LIBRARIES = NO;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				RUN_CLANG_STATIC_ANALYZER = YES;
@@ -356,8 +357,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = NO;
-				CONFIGURATION_BUILD_DIR = ../output;
-				CONFIGURATION_TEMP_DIR = ../out;
+				CONFIGURATION_BUILD_DIR = ../cached;
+				CONFIGURATION_TEMP_DIR = build;
 				DSTROOT = /tmp/ClientExtension.dst;
 				GCC_LINK_WITH_DYNAMIC_LIBRARIES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
