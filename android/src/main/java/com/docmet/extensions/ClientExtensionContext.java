@@ -56,10 +56,37 @@ public class ClientExtensionContext extends FREContext implements SensorEventLis
     private static final String TAG = "[ClientExtensionContext]";
 
     /*
+     * @private
+     */
+    private static final Map<Integer, String> sensorTypeNameMap = new HashMap<Integer, String>();
+
+    /*
      * Initializer method
      */
     public void initialize() {
         Log.d(TAG, "initialize");
+        sensorTypeNameMap.put(Sensor.TYPE_ACCELEROMETER, "ACCELEROMETER");
+        sensorTypeNameMap.put(Sensor.TYPE_ACCELEROMETER, "ACCELEROMETER");
+        sensorTypeNameMap.put(Sensor.TYPE_AMBIENT_TEMPERATURE, "AMBIENT_TEMPERATURE");
+        sensorTypeNameMap.put(Sensor.TYPE_GAME_ROTATION_VECTOR, "GAME_ROTATION_VECTOR");
+        sensorTypeNameMap.put(Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR, "GEOMAGNETIC_ROTATION_VECTOR");
+        sensorTypeNameMap.put(Sensor.TYPE_GRAVITY, "GRAVITY");
+        sensorTypeNameMap.put(Sensor.TYPE_GYROSCOPE, "GYROSCOPE");
+        sensorTypeNameMap.put(Sensor.TYPE_GYROSCOPE_UNCALIBRATED, "GYROSCOPE_UNCALIBRATED");
+        sensorTypeNameMap.put(Sensor.TYPE_HEART_RATE, "HEART_RATE");
+        sensorTypeNameMap.put(Sensor.TYPE_LIGHT, "LIGHT");
+        sensorTypeNameMap.put(Sensor.TYPE_LINEAR_ACCELERATION, "LINEAR_ACCELERATION");
+        sensorTypeNameMap.put(Sensor.TYPE_MAGNETIC_FIELD, "MAGNETIC_FIELD");
+        sensorTypeNameMap.put(Sensor.TYPE_MAGNETIC_FIELD_UNCALIBRATED, "MAGNETIC_FIELD_UNCALIBRATED");
+        sensorTypeNameMap.put(Sensor.TYPE_ORIENTATION, "ORIENTATION");
+        sensorTypeNameMap.put(Sensor.TYPE_PRESSURE, "PRESSURE");
+        sensorTypeNameMap.put(Sensor.TYPE_PROXIMITY, "PROXIMITY");
+        sensorTypeNameMap.put(Sensor.TYPE_RELATIVE_HUMIDITY, "RELATIVE_HUMIDITY");
+        sensorTypeNameMap.put(Sensor.TYPE_ROTATION_VECTOR, "ROTATION_VECTOR");
+        sensorTypeNameMap.put(Sensor.TYPE_SIGNIFICANT_MOTION, "SIGNIFICANT_MOTION");
+        sensorTypeNameMap.put(Sensor.TYPE_STEP_COUNTER, "STEP_COUNTER");
+        sensorTypeNameMap.put(Sensor.TYPE_STEP_DETECTOR, "STEP_DETECTOR");
+        sensorTypeNameMap.put(Sensor.TYPE_TEMPERATURE, "TEMPERATURE");
     }
 
     /*
@@ -106,7 +133,7 @@ public class ClientExtensionContext extends FREContext implements SensorEventLis
         SensorManager sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
         List<Sensor> result = sensorManager.getSensorList(Sensor.TYPE_ALL);
         for (Sensor sensor : result) {
-            Log.d(TAG, sensor.getName() + ", " + Integer.toString(sensor.getType()) + ", " + sensor.getVendor());
+            Log.d(TAG, sensor.getName() + ", " + sensorTypeNameMap.get(sensor.getType()) + ", " + sensor.getVendor());
         }
         return result;
     }
@@ -132,8 +159,8 @@ public class ClientExtensionContext extends FREContext implements SensorEventLis
      */
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
         try {
-            String sensorType = Integer.toString(sensor.getType());
-            String sensorEventType = "ACCURACY_CHANGE_" + sensorType;
+            String sensorType = sensorTypeNameMap.get(sensor.getType());
+            String sensorEventType = sensorType + "_ACCURACY";
             dispatchStatusEventAsync(sensorEventType, Integer.toString(accuracy));
         } catch (Exception e) {
             Log.d(TAG, "error: " + e.getMessage());
@@ -146,8 +173,8 @@ public class ClientExtensionContext extends FREContext implements SensorEventLis
     public void onSensorChanged(SensorEvent event) {
         try {
             Sensor sensor = event.sensor;
-            String sensorType = Integer.toString(sensor.getType());
-            String sensorEventType = "VALUE_CHANGE_" + sensorType;
+            String sensorType = sensorTypeNameMap.get(sensor.getType());
+            String sensorEventType = sensorType + "_VALUE";
             float sensorLevel = event.values[0];
             dispatchStatusEventAsync(sensorEventType, Float.toString(sensorLevel));
         } catch (Exception e) {

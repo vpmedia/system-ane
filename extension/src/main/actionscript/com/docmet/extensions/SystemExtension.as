@@ -104,7 +104,7 @@ public class SystemExtension extends EventDispatcher {
     public static const EXT_SENSOR_TYPE_SIGNIFICANT_MOTION:uint = 0x00000011;
     public static const EXT_SENSOR_TYPE_STEP_COUNTER:uint = 0x00000013;
     public static const EXT_SENSOR_TYPE_STEP_DETECTOR:uint = 0x00000012;
-    public static const EXT_SENSOR_TYPE_STEP_TEMPERATURE:uint = 0x00000007;
+    public static const EXT_SENSOR_TYPE_TEMPERATURE:uint = 0x00000007;
 
     /**
      * @see https://developer.android.com/reference/android/hardware/SensorManager.html
@@ -194,6 +194,7 @@ public class SystemExtension extends EventDispatcher {
         //loggingHandler("ClientExtension::onStatus: " + event.toString());
         // TODO: is event.clone() needed here?!
         // VPMedia: Since it's coming from the Native layer and we do not modify anything, I don't think so.
+        //trace(event);
         dispatchEvent(event);
     }
 

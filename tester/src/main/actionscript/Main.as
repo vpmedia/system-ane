@@ -140,6 +140,9 @@ public class Main extends Sprite {
         extension.callNative(SystemExtension.EXT_START_SENSOR, SystemExtension.EXT_SENSOR_TYPE_ORIENTATION, SystemExtension.EXT_SENSOR_DELAY_UI);
         extension.callNative(SystemExtension.EXT_START_SENSOR, SystemExtension.EXT_SENSOR_TYPE_PRESSURE, SystemExtension.EXT_SENSOR_DELAY_UI);
         extension.callNative(SystemExtension.EXT_START_SENSOR, SystemExtension.EXT_SENSOR_TYPE_PROXIMITY, SystemExtension.EXT_SENSOR_DELAY_UI);
+        extension.callNative(SystemExtension.EXT_START_SENSOR, SystemExtension.EXT_SENSOR_TYPE_GYROSCOPE, SystemExtension.EXT_SENSOR_DELAY_UI);
+        extension.callNative(SystemExtension.EXT_START_SENSOR, SystemExtension.EXT_SENSOR_TYPE_MAGNETIC_FIELD, SystemExtension.EXT_SENSOR_DELAY_UI);
+        //extension.callNative(SystemExtension.EXT_START_SENSOR, SystemExtension.EXT_SENSOR_TYPE_ALL, SystemExtension.EXT_SENSOR_DELAY_UI);
     }
 
     /**
