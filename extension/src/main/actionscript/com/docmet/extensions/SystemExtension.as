@@ -71,13 +71,14 @@ public class SystemExtension extends EventDispatcher {
     /**
      * Keep in sync with CommandCallNative.java command types
      */
-    public static const EXT_LOG:uint = 1; 
-    public static const EXT_DEVICE_ID:uint = 2; 
+    public static const EXT_LOG:uint = 1;
+    public static const EXT_DEVICE_ID:uint = 2;
     public static const EXT_VIBRATE:uint = 3;  
     public static const EXT_NOTIFY:uint = 4;
     public static const EXT_START_SENSOR:uint = 5;
     public static const EXT_STOP_SENSOR:uint = 6;
     public static const EXT_HAS_SENSOR:uint = 7;
+    public static const EXT_LIST_SENSOR:uint = 8;
     
     /**
      * @see https://developer.android.com/reference/android/hardware/Sensor.html
@@ -104,6 +105,14 @@ public class SystemExtension extends EventDispatcher {
     public static const EXT_SENSOR_TYPE_STEP_COUNTER:uint = 0x00000013;
     public static const EXT_SENSOR_TYPE_STEP_DETECTOR:uint = 0x00000012;
     public static const EXT_SENSOR_TYPE_STEP_TEMPERATURE:uint = 0x00000007;
+
+    /**
+     * @see https://developer.android.com/reference/android/hardware/SensorManager.html
+     */
+    public static const EXT_SENSOR_DELAY_FASTEST:uint = 0x00000000; // 0
+    public static const EXT_SENSOR_DELAY_GAME:uint = 0x00000001; // 1
+    public static const EXT_SENSOR_DELAY_NORMAL:uint = 0x00000003; // 3
+    public static const EXT_SENSOR_DELAY_UI:uint = 0x00000002; //2
 
     //----------------------------------
     //  Constructor

@@ -29,10 +29,9 @@
  */
 package com.docmet.extensions;
 
+import android.util.Log;
 import com.adobe.fre.FREContext;
 import com.adobe.fre.FREExtension;
-
-import android.util.Log;
 
 /**
  * Initialization and finalization class of native extension.
@@ -42,20 +41,20 @@ import android.util.Log;
 public class ClientExtension implements FREExtension {
     /*
      * @private
-     */ 
+     */
     private static final String TAG = "[ClientExtension]";
-    
+
     /*
      * @private
-     */ 
+     */
     private ClientExtensionContext context;
-    
+
     /*
      * @inheritDoc
      */
-    public FREContext createContext(String extId) {  
-        Log.d(TAG, "createContext: " + extId);  
-        if(context == null) {
+    public FREContext createContext(String extId) {
+        Log.d(TAG, "createContext: " + extId);
+        if (context == null) {
             context = new ClientExtensionContext();
             context.initialize();
         }
@@ -64,17 +63,17 @@ public class ClientExtension implements FREExtension {
 
     /*
      * @inheritDoc
-     */  
-    public void initialize( ) {
+     */
+    public void initialize() {
         Log.d(TAG, "initialize");
     }
-    
+
     /*
      * @inheritDoc
      */
     public void dispose() {
         Log.d(TAG, "dispose");
-        if(context != null) {
+        if (context != null) {
             context.dispose();
         }
         context = null;
