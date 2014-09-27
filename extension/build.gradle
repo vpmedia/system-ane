@@ -209,11 +209,11 @@ task package_init << {
         into tempDir    
     }   
     ant.copy(file: '../android/build/intermediates/bundles/release/classes.jar', tofile: tempDir.absolutePath + '/ClientExtension.jar') 
-    //if (Os.isFamily(Os.FAMILY_WINDOWS)) {  
-    //    ant.copy(file: '../cached/ClientExtension.dll', tofile: tempDir.absolutePath + '/ClientExtension.dll') 
-    //} else {       
-    //    ant.copy(file: '../windows/build/binaries/mainSharedLibrary/main.dll', tofile: '../cached/ClientExtension.dll')  
-    //}
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {  
+        ant.copy(file: '../cached/libClientExtension.a', tofile: tempDir.absolutePath + '/libClientExtension.a') 
+    } else {       
+        ant.copy(file: '../output/libClientExtension.a', tofile: '../cached/libClientExtension.a')  
+    }
 }
 
 task package_ane(type: JavaExec) {
@@ -244,6 +244,14 @@ task package_ane(type: JavaExec) {
         'Android-x86',
         'library.swf',
         'ClientExtension.jar',
+        '-platform',
+        'iPhone-ARM',
+        'library.swf',
+        'libClientExtension.a',
+        '-platform',
+        'iPhone-x86',
+        'library.swf',
+        'libClientExtension.a',
         '-platform',
         'default',
         'library.swf'

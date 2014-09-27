@@ -49,18 +49,18 @@
                 <finalizer>com.docmet.extensions.ClientExtension</finalizer>
             </applicationDeployment>
         </platform>         
-        <!--platform name="iPhone-ARM"> 
+        <platform name="iPhone-ARM"> 
             <applicationDeployment> 
-                <nativeLibrary>ClientExtension.a</nativeLibrary> 
+                <nativeLibrary>libClientExtension.a</nativeLibrary> 
                 <initializer>ClientExtensionInitializer</initializer> 
             </applicationDeployment> 
         </platform> 
         <platform name="iPhone-x86"> 
             <applicationDeployment> 
-                <nativeLibrary>ClientExtension.a</nativeLibrary> 
+                <nativeLibrary>libClientExtension.a</nativeLibrary> 
                 <initializer>ClientExtensionInitializer</initializer> 
             </applicationDeployment> 
-        </platform--> 
+        </platform> 
         <platform name="default"> 
             <applicationDeployment/> 
         </platform> 
