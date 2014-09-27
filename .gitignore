@@ -63,11 +63,4 @@ local.properties
 *.ipr
 *.iws
 
-# Native outputs
-*.o
-*.a
-*.exe
-*.lib
-*.def
-
 # Project specific
