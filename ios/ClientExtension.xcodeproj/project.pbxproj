@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01DDBA7C19D4B97F00E958E2 /* ClientExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 01DDBA7B19D4B97F00E958E2 /* ClientExtension.h */; };
 		BFD1268B14EBB7D800042533 /* ClientExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD1268A14EBB7D800042533 /* ClientExtension.m */; };
 		BFD1269F14EBB7D800042533 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BFD1269D14EBB7D800042533 /* InfoPlist.strings */; };
 		BFD126A214EBB7D800042533 /* ClientExtensionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD126A114EBB7D800042533 /* ClientExtensionTests.m */; };
@@ -24,6 +25,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		01DDBA7B19D4B97F00E958E2 /* ClientExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClientExtension.h; sourceTree = "<group>"; };
 		BFD1268114EBB7D700042533 /* libClientExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libClientExtension.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFD1268414EBB7D800042533 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BFD1268814EBB7D800042533 /* ClientExtension-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ClientExtension-Prefix.pch"; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 		BFD1268614EBB7D800042533 /* ClientExtension */ = {
 			isa = PBXGroup;
 			children = (
+				01DDBA7B19D4B97F00E958E2 /* ClientExtension.h */,
 				BFD126AB14EBB90700042533 /* FlashRuntimeExtensions.h */,
 				BFD1268A14EBB7D800042533 /* ClientExtension.m */,
 				BFD1268714EBB7D800042533 /* Supporting Files */,
@@ -126,6 +129,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BFD126AC14EBB90700042533 /* FlashRuntimeExtensions.h in Headers */,
+				01DDBA7C19D4B97F00E958E2 /* ClientExtension.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
