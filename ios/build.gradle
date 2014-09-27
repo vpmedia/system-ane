@@ -41,6 +41,7 @@ buildscript {
 apply plugin: 'xcode'
 
 xcodebuild {
+  sdk = 'iphoneos'
   target = 'ClientExtension'
 }
 
