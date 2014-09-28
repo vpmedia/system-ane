@@ -69,19 +69,27 @@
                 <uses-permission android:name="android.permission.FLASHLIGHT" />
                 <uses-permission android:name="android.permission.INTERNET" /> 
                 <uses-permission android:name="android.permission.LOCATION_HARDWARE" />
+                <uses-permission android:name="android.permission.NFC" />
                 <uses-permission android:name="android.permission.READ_PHONE_STATE" />
                 <uses-permission android:name="android.permission.READ_PROFILE" />
                 <uses-permission android:name="android.permission.READ_CALENDAR" />
-                <uses-permission android:name="android.permission.STATUS_BAR" />
+                <uses-permission android:name="android.permission.STATUS_BAR" /> 
+                <uses-permission android:name="android.permission.SET_WALLPAPER" /> 
                 <uses-permission android:name="android.permission.TRANSMIT_IR" />
                 <uses-permission android:name="android.permission.VIBRATE" />
                 <uses-permission android:name="android.permission.WAKE_LOCK" /> 
-                <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> 
-                <uses-feature android:name="android.hardware.touchscreen.multitouch" />
+                <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+                <uses-feature android:name="android.hardware.touchscreen" />
                 <uses-feature android:name="android.hardware.bluetooth" />
                 <uses-feature android:name="android.hardware.camera" />
                 <uses-feature android:name="android.hardware.microphone" />
                 <uses-feature android:name="android.hardware.location" />
+                <uses-feature android:name="android.hardware.location.network" />
+                <uses-feature android:name="android.hardware.location.gps" />
+                <uses-feature android:name="android.hardware.telephony" />
+                <uses-feature android:name="android.hardware.nfc" />
+                <uses-feature android:name="android.hardware.usb" />
+                <uses-feature android:name="android.hardware.wifi" />
                 <uses-feature android:name="android.hardware.sensor.accelerometer" />
                 <uses-feature android:name="android.hardware.sensor.barometer" />
                 <uses-feature android:name="android.hardware.sensor.compass" />
@@ -90,7 +98,6 @@
                 <uses-feature android:name="android.hardware.sensor.proximity" />
                 <uses-feature android:name="android.hardware.sensor.stepcounter" />
                 <uses-feature android:name="android.hardware.sensor.stepdetector" />
-                <uses-feature android:name="android.hardware.wifi" />
                 <application android:hardwareAccelerated="true"/> 
             </manifest>            
         ]]>

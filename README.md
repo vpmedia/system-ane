@@ -33,6 +33,10 @@ AIR Native Extension for core Mobile System APIs
 
 * run **build**
 
+## Using
+
+* please package you IPA with **hideAneLibSymbols** option
+
 ## License
 
 * [MIT](http://opensource.org/licenses/MIT)

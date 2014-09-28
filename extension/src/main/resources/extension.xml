@@ -38,9 +38,6 @@
                 <initializer>com.docmet.extensions.ClientExtension</initializer>
                 <finalizer>com.docmet.extensions.ClientExtension</finalizer>
             </applicationDeployment>
-            <!--packagedDependencies> 
-                <packagedDependency>android-support-v4.jar</packagedDependency> 
-            </packagedDependencies--> 
         </platform>  
         <platform name="Android-x86">
             <applicationDeployment>

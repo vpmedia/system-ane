@@ -40,6 +40,7 @@ import android.hardware.SensorManager;
 import android.os.Vibrator;
 import android.provider.Settings;
 import android.util.Log;
+import android.R;
 
 import com.adobe.fre.FREContext;
 import com.adobe.fre.FREFunction;
@@ -126,6 +127,8 @@ public class ClientExtensionContext extends FREContext implements SensorEventLis
                 .setContentText(subject)
                 .build();
         notificationManager.notify(id, notification);
+        //.setSmallIcon(R.drawable.ic_launcher)
+                
     }
 
     /*
