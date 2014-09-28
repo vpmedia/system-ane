@@ -30,15 +30,17 @@
 package com.docmet.extensions;
 
 import android.util.Log;
+
 import com.adobe.fre.FREContext;
 import com.adobe.fre.FREExtension;
 
 /**
  * Initialization and finalization class of native extension.
  *
- * @see http://help.adobe.com/en_US/air/extensions/WS982b6f491d178e6d6565d9b1132a79a012f-7ffc.html
+ * <p>http://help.adobe.com/en_US/air/extensions/WS982b6f491d178e6d6565d9b1132a79a012f-7ffc.html<p/>
  */
 public class ClientExtension implements FREExtension {
+
     /*
      * @private
      */

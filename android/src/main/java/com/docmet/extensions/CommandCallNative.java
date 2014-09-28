@@ -30,21 +30,17 @@
 package com.docmet.extensions;
 
 import android.app.Activity;
-import android.content.Context;
-import android.os.Vibrator;
-import android.provider.Settings.Secure;
 import android.util.Log;
+
 import com.adobe.fre.FREContext;
 import com.adobe.fre.FREFunction;
 import com.adobe.fre.FREObject;
 
 /**
- * Global API wrapper.
- *
- * @see http://help.adobe.com/en_US/air/extensions/WS24fe7069b89c5bc5-6148f737132a836f332-8000.html
+ * Global API wrapper
+ * <p>http://help.adobe.com/en_US/air/extensions/WS24fe7069b89c5bc5-6148f737132a836f332-8000.html<p/>
  */
 public class CommandCallNative implements FREFunction {
-
     /*
      * @private
      */
@@ -66,12 +62,11 @@ public class CommandCallNative implements FREFunction {
     public FREObject call(FREContext ctx, FREObject[] argv) {
         int argc = argv.length;
         FREObject result = null;
-        String commandResult = null;
         try {
             ClientExtensionContext clientExtensionContext = (ClientExtensionContext) ctx;
             Activity activity = ctx.getActivity();
             int type = argv[0].getAsInt();
-            Log.d(TAG, "call: " + Integer.toString(type) + " (" + Integer.toString(argc) + ")");
+            //Log.d(TAG, "call: " + Integer.toString(type) + " (" + Integer.toString(argc) + ")");
             switch (type) {
                 case EXT_LOG:
                     if (argc > 1) {
@@ -82,14 +77,17 @@ public class CommandCallNative implements FREFunction {
                     }
                     break;
                 case EXT_DEVICE_ID:
-                    result = FREObject.newObject(Secure.getString(activity.getContentResolver(), Secure.ANDROID_ID));
+                    result = FREObject.newObject(clientExtensionContext.getDeviceId());
                     break;
                 case EXT_VIBRATE:
-                    Vibrator vibrator = (Vibrator) activity.getSystemService(Context.VIBRATOR_SERVICE);
-                    vibrator.vibrate(500);
-                    result = FREObject.newObject(1);
+                    if (argc > 1) {
+                        result = FREObject.newObject(clientExtensionContext.vibrate(argv[1].getAsInt()));
+                    } else {
+                        result = FREObject.newObject(clientExtensionContext.vibrate(1000));
+                    }
                     break;
                 case EXT_NOTIFY:
+                    clientExtensionContext.sendNotify(0, "Hello ANE", "Notification");
                     result = FREObject.newObject(1);
                     break;
                 case EXT_START_SENSOR:
@@ -110,6 +108,9 @@ public class CommandCallNative implements FREFunction {
                     break;
                 case EXT_LIST_SENSOR:
                     result = FREObject.newObject(clientExtensionContext.getSensorList().toString());
+                    break;
+                case EXT_HAS_SENSOR:
+                    result = FREObject.newObject(0);
                     break;
                 default:
                     result = FREObject.newObject(0);

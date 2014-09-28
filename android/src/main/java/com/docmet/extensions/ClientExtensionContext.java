@@ -29,12 +29,18 @@
  */
 package com.docmet.extensions;
 
+import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Vibrator;
+import android.provider.Settings;
 import android.util.Log;
+
 import com.adobe.fre.FREContext;
 import com.adobe.fre.FREFunction;
 
@@ -44,13 +50,14 @@ import java.util.Map;
 
 /**
  * This class specifies the mapping between the AS3 functions and the Java native classes.
- *
- * @see http://help.adobe.com/en_US/air/extensions/WS39e706a46ad531be-fd70de2132a8f3874e-8000.html
- * @see https://developer.android.com/reference/android/hardware/Sensor.html
+ * <p>http://help.adobe.com/en_US/air/extensions/WS39e706a46ad531be-fd70de2132a8f3874e-8000.html
+ * https://developer.android.com/reference/android/hardware/Sensor.html<p/>
  */
 public class ClientExtensionContext extends FREContext implements SensorEventListener {
 
-    /*
+    //
+
+     /*
      * @private
      */
     private static final String TAG = "[ClientExtensionContext]";
@@ -102,12 +109,46 @@ public class ClientExtensionContext extends FREContext implements SensorEventLis
      */
     @Override
     public Map<String, FREFunction> getFunctions() {
-        // create wrapper map
         Map<String, FREFunction> functionMap = new HashMap<String, FREFunction>();
-        // define global wrapper
         functionMap.put("callNative", new CommandCallNative());
-        // return map
         return functionMap;
+    }
+
+    /*
+     * Sends a Notification
+     */
+    public void sendNotify(int id, String message, String subject) {
+        Activity activity = getActivity();
+        Context context = activity.getApplicationContext();
+        NotificationManager notificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
+        Notification notification = new Notification.Builder(context)
+                .setContentTitle(message)
+                .setContentText(subject)
+                .build();
+        notificationManager.notify(id, notification);
+    }
+
+    /*
+     * Returns a device UUID
+     */
+    public String getDeviceId() {
+        Activity activity = getActivity();
+        String result = Settings.Secure.getString(activity.getContentResolver(), Settings.Secure.ANDROID_ID);
+        return result;
+    }
+
+    /*
+     * Vibrates the device
+     */
+    public boolean vibrate(long time) {
+        boolean result = false;
+        Activity activity = getActivity();
+        Vibrator vibrator = (Vibrator) activity.getSystemService(Context.VIBRATOR_SERVICE);
+        if (vibrator.hasVibrator()) {
+            vibrator.vibrate(time);
+            result = true;
+        }
+        return result;
     }
 
     /*
