@@ -33,12 +33,18 @@ import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
+import android.telephony.TelephonyManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Vibrator;
 import android.provider.Settings;
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.TextToSpeech.OnInitListener;
 import android.util.Log;
 import android.R;
 
@@ -48,13 +54,14 @@ import com.adobe.fre.FREFunction;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Locale;
 
 /**
  * This class specifies the mapping between the AS3 functions and the Java native classes.
  * <p>http://help.adobe.com/en_US/air/extensions/WS39e706a46ad531be-fd70de2132a8f3874e-8000.html
  * https://developer.android.com/reference/android/hardware/Sensor.html<p/>
  */
-public class ClientExtensionContext extends FREContext implements SensorEventListener {
+public class ClientExtensionContext extends FREContext implements SensorEventListener, OnInitListener {
 
     //
 
@@ -114,7 +121,101 @@ public class ClientExtensionContext extends FREContext implements SensorEventLis
         functionMap.put("callNative", new CommandCallNative());
         return functionMap;
     }
+    
+    //
+    // IDENTIFICATION
+    //
+    
+    /*
+     * Returns a device UUID
+     */
+    public String getDeviceId() {
+        Activity activity = getActivity();
+        String result = Settings.Secure.getString(activity.getContentResolver(), Settings.Secure.ANDROID_ID);
+        return result;
+    }
 
+    /*
+     * Returns a device IMEI
+     */
+    public String getDeviceIMEI() {
+        Activity activity = getActivity();
+        Context context = activity.getApplicationContext();
+        TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        String result = manager != null ? manager.getDeviceId() : null;
+        return result;
+    }
+    
+    /*
+     * Returns a device phone number
+     */
+    public String getDeviceNumber() {
+        Activity activity = getActivity();
+        Context context = activity.getApplicationContext();
+        TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        String result = manager != null ? manager.getLine1Number() : null;
+        return result;
+    }
+    
+    /*
+     * Returns a system property by key
+     */
+    public String getSystemProperty(String key) {
+        String result = System.getProperty(key);
+        return result;
+    }
+        
+    //
+    // MEDIA
+    //
+    
+    /*
+     * Vibrates the device
+     */
+    public boolean vibrate(long time) {
+        boolean result = false;
+        Activity activity = getActivity();
+        Vibrator vibrator = (Vibrator) activity.getSystemService(Context.VIBRATOR_SERVICE);
+        if (vibrator.hasVibrator()) {
+            vibrator.vibrate(time);
+            result = true;
+        }
+        return result;
+    }
+    
+    //
+    // TEXT2SPEECH
+    //
+    
+    /*
+     * Text to speech
+     */
+    public boolean speech(String message) {
+        boolean result = false;        
+        Activity activity = getActivity();
+        Context context = activity.getApplicationContext();
+        TextToSpeech tts = new TextToSpeech(context, this);
+        tts.setLanguage(Locale.US);
+        tts.speak(message, TextToSpeech.QUEUE_FLUSH, null);
+        return result;
+    }
+    
+        
+    /*
+     * Text2Speech initializer handler
+     */
+    public void onInit(int status) {
+        /*if (status == TextToSpeech.SUCCESS) {            
+            tts.speak(message, TextToSpeech.QUEUE_FLUSH, null);
+        } else if (status == TextToSpeech.ERROR) {
+            tts.shutdown();
+        }*/
+    }
+    
+    //
+    // INTENTS
+    //
+        
     /*
      * Sends a Notification
      */
@@ -130,30 +231,7 @@ public class ClientExtensionContext extends FREContext implements SensorEventLis
         //.setSmallIcon(R.drawable.ic_launcher)
                 
     }
-
-    /*
-     * Returns a device UUID
-     */
-    public String getDeviceId() {
-        Activity activity = getActivity();
-        String result = Settings.Secure.getString(activity.getContentResolver(), Settings.Secure.ANDROID_ID);
-        return result;
-    }
-
-    /*
-     * Vibrates the device
-     */
-    public boolean vibrate(long time) {
-        boolean result = false;
-        Activity activity = getActivity();
-        Vibrator vibrator = (Vibrator) activity.getSystemService(Context.VIBRATOR_SERVICE);
-        if (vibrator.hasVibrator()) {
-            vibrator.vibrate(time);
-            result = true;
-        }
-        return result;
-    }
-
+    
     /*
      * Attach a Intent listener
      */
@@ -169,6 +247,10 @@ public class ClientExtensionContext extends FREContext implements SensorEventLis
             }
         };*/
     }
+    
+    //
+    // SENSORS
+    //
 
     /*
      * Lists available Sensors

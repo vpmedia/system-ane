@@ -55,6 +55,7 @@ public class CommandCallNative implements FREFunction {
     private static final int EXT_STOP_SENSOR = 6; // stop a sensor by type (requires type param)
     private static final int EXT_HAS_SENSOR = 7; // check for sensor by type (requires type param)
     private static final int EXT_LIST_SENSOR = 8; // list available sensors (no param)
+    private static final int EXT_SPEECH = 9; // text to speech (with string param)
 
     /*
      * Command entry point
@@ -111,6 +112,9 @@ public class CommandCallNative implements FREFunction {
                     break;
                 case EXT_HAS_SENSOR:
                     result = FREObject.newObject(0);
+                    break;
+                case EXT_SPEECH:
+                    result = FREObject.newObject(clientExtensionContext.speech("Hello ANE Text to Speech"));
                     break;
                 default:
                     result = FREObject.newObject(0);
