@@ -46,16 +46,27 @@ public class CommandCallNative implements FREFunction {
      */
     private static final String TAG = "[CommandCallNative]";
 
+    //----------------------------------
+    // Constants
+    //----------------------------------
+
     // List of available commands  
-    private static final int EXT_LOG = 1; // send message into system log
-    private static final int EXT_DEVICE_ID = 2; // get device id (no param)
-    private static final int EXT_VIBRATE = 3; // vibrate device (optional time param)
-    private static final int EXT_NOTIFY = 4; // send notification (requires message param)
-    private static final int EXT_START_SENSOR = 5; // start a sensor by type (requires type and delay param)
-    private static final int EXT_STOP_SENSOR = 6; // stop a sensor by type (requires type param)
-    private static final int EXT_HAS_SENSOR = 7; // check for sensor by type (requires type param)
-    private static final int EXT_LIST_SENSOR = 8; // list available sensors (no param)
-    private static final int EXT_SPEECH = 9; // text to speech (with string param)
+    private static final int EXT_LOG = 1;
+    private static final int EXT_VIBRATE = 2;
+    private static final int EXT_SPEECH = 3;
+
+    private static final int EXT_DEVICE_ID = 100;
+    private static final int EXT_DEVICE_IMEI = 101;
+    private static final int EXT_DEVICE_PHONE = 102;
+    private static final int EXT_DEVICE_PROP = 103;
+
+    private static final int EXT_NOTIFY = 200;
+    private static final int EXT_TOAST = 201;
+
+    private static final int EXT_START_SENSOR = 300;
+    private static final int EXT_STOP_SENSOR = 301;
+    private static final int EXT_HAS_SENSOR = 302;
+    private static final int EXT_LIST_SENSOR = 303;
 
     /*
      * Command entry point
@@ -80,6 +91,15 @@ public class CommandCallNative implements FREFunction {
                 case EXT_DEVICE_ID:
                     result = FREObject.newObject(clientExtensionContext.getDeviceId());
                     break;
+                case EXT_DEVICE_IMEI:
+                    result = FREObject.newObject(clientExtensionContext.getDeviceIMEI());
+                    break;
+                case EXT_DEVICE_PHONE:
+                    result = FREObject.newObject(clientExtensionContext.getDeviceNumber());
+                    break;
+                case EXT_DEVICE_PROP:
+                    result = FREObject.newObject(clientExtensionContext.getSystemProperty("os.arch"));
+                    break;
                 case EXT_VIBRATE:
                     if (argc > 1) {
                         result = FREObject.newObject(clientExtensionContext.vibrate(argv[1].getAsInt()));
@@ -88,8 +108,10 @@ public class CommandCallNative implements FREFunction {
                     }
                     break;
                 case EXT_NOTIFY:
-                    clientExtensionContext.sendNotify(0, "Hello ANE", "Notification");
-                    result = FREObject.newObject(1);
+                    result = FREObject.newObject(clientExtensionContext.sendNotify(0, "Hello ANE", "Notification"));
+                    break;
+                case EXT_TOAST:
+                    result = FREObject.newObject(clientExtensionContext.sendToast("Hello ANE"));
                     break;
                 case EXT_START_SENSOR:
                     if (argc > 2) {

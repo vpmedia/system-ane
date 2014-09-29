@@ -34,15 +34,23 @@
 // Constants
 //----------------------------------
 
-// Common
+// List of available commands
 #define EXT_LOG 1
-#define EXT_DEVICE_ID 2
-#define EXT_VIBRATE 3
-#define EXT_NOTIFY 4
-#define EXT_START_SENSOR 5
-#define EXT_STOP_SENSOR 6
-#define EXT_HAS_SENSOR 7
-#define EXT_LIST_SENSOR 8
+#define EXT_VIBRATE 2
+#define EXT_SPEECH 3
+
+#define EXT_DEVICE_ID 100
+#define EXT_DEVICE_IMEI 101
+#define EXT_DEVICE_PHONE 102
+#define EXT_DEVICE_PROP 103
+
+#define EXT_NOTIFY 200
+#define EXT_TOAST 201
+
+#define EXT_START_SENSOR 300
+#define EXT_STOP_SENSOR 301
+#define EXT_HAS_SENSOR 302
+#define EXT_LIST_SENSOR 303
 
 //----------------------------------
 // Helpers

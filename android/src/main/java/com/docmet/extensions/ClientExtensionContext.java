@@ -47,6 +47,7 @@ import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
 import android.util.Log;
 import android.R;
+import android.widget.Toast;
 
 import com.adobe.fre.FREContext;
 import com.adobe.fre.FREFunction;
@@ -121,10 +122,10 @@ public class ClientExtensionContext extends FREContext implements SensorEventLis
         functionMap.put("callNative", new CommandCallNative());
         return functionMap;
     }
-    
-    //
-    // IDENTIFICATION
-    //
+
+    //----------------------------------
+    // Device Properties
+    //----------------------------------
     
     /*
      * Returns a device UUID
@@ -159,15 +160,17 @@ public class ClientExtensionContext extends FREContext implements SensorEventLis
     
     /*
      * Returns a system property by key
+     *
+     * https://developer.android.com/reference/java/lang/System.html#getProperties
      */
     public String getSystemProperty(String key) {
         String result = System.getProperty(key);
         return result;
     }
-        
-    //
-    // MEDIA
-    //
+
+    //----------------------------------
+    // Media
+    //----------------------------------
     
     /*
      * Vibrates the device
@@ -182,10 +185,10 @@ public class ClientExtensionContext extends FREContext implements SensorEventLis
         }
         return result;
     }
-    
-    //
-    // TEXT2SPEECH
-    //
+
+    //----------------------------------
+    // Text to Speech
+    //----------------------------------
     
     /*
      * Text to speech
@@ -211,15 +214,15 @@ public class ClientExtensionContext extends FREContext implements SensorEventLis
             tts.shutdown();
         }*/
     }
-    
-    //
-    // INTENTS
-    //
+
+    //----------------------------------
+    // Notifications
+    //----------------------------------
         
     /*
      * Sends a Notification
      */
-    public void sendNotify(int id, String message, String subject) {
+    public boolean sendNotify(int id, String message, String subject) {
         Activity activity = getActivity();
         Context context = activity.getApplicationContext();
         NotificationManager notificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -229,7 +232,19 @@ public class ClientExtensionContext extends FREContext implements SensorEventLis
                 .build();
         notificationManager.notify(id, notification);
         //.setSmallIcon(R.drawable.ic_launcher)
-                
+        return true;
+    }
+
+    /*
+     * Sends a Notification
+     */
+    public boolean sendToast(String message) {
+        Activity activity = getActivity();
+        Context context = activity.getApplicationContext();
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, message, duration);
+        toast.show();
+        return true;
     }
     
     /*
@@ -247,10 +262,10 @@ public class ClientExtensionContext extends FREContext implements SensorEventLis
             }
         };*/
     }
-    
-    //
-    // SENSORS
-    //
+
+    //----------------------------------
+    // Sensors
+    //----------------------------------
 
     /*
      * Lists available Sensors

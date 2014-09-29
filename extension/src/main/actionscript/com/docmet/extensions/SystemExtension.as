@@ -72,13 +72,21 @@ public class SystemExtension extends EventDispatcher {
      * Keep in sync with CommandCallNative.java command types
      */
     public static const EXT_LOG:uint = 1;
-    public static const EXT_DEVICE_ID:uint = 2;
-    public static const EXT_VIBRATE:uint = 3;  
-    public static const EXT_NOTIFY:uint = 4;
-    public static const EXT_START_SENSOR:uint = 5;
-    public static const EXT_STOP_SENSOR:uint = 6;
-    public static const EXT_HAS_SENSOR:uint = 7;
-    public static const EXT_LIST_SENSOR:uint = 8;
+    public static const EXT_VIBRATE:uint = 2;
+    public static const EXT_SPEECH:uint = 3;
+
+    public static const EXT_DEVICE_ID:uint = 100;
+    public static const EXT_DEVICE_IMEI:uint = 101;
+    public static const EXT_DEVICE_PHONE:uint = 102;
+    public static const EXT_DEVICE_PROP:uint = 103;
+
+    public static const EXT_NOTIFY:uint = 200;
+    public static const EXT_TOAST:uint = 201;
+
+    public static const EXT_START_SENSOR:uint = 300;
+    public static const EXT_STOP_SENSOR:uint = 301;
+    public static const EXT_HAS_SENSOR:uint = 302;
+    public static const EXT_LIST_SENSOR:uint = 303;
     
     /**
      * @see https://developer.android.com/reference/android/hardware/Sensor.html
