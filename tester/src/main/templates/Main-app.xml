@@ -29,7 +29,7 @@
  ~ =END MIT LICENSE
  ~
 -->
-<application xmlns="http://ns.adobe.com/air/application/15.0">
+<application xmlns="http://ns.adobe.com/air/application/16.0">
     <id>com.docmet.extensions.system.tester</id>
     <filename>SystemANETester</filename>
     <name>System ANE Tester</name>

@@ -149,8 +149,8 @@ task compile_init << {
     ant.replace(dir: "src/main/temp/", token: '${viewport_scale}', value: '1')
     ant.replace(dir: "src/main/temp/", token: '${version}', value: "${version}")
     ant.replace(dir: "src/main/temp/", token: '${debug}', value: 'true')
-    ant.replace(dir: "src/main/temp/", token: '${player_version}', value: '15.0')
-    ant.replace(dir: "src/main/temp/", token: '${swf_version}', value: '26')
+    ant.replace(dir: "src/main/temp/", token: '${player_version}', value: '16.0')
+    ant.replace(dir: "src/main/temp/", token: '${swf_version}', value: '27')
     ant.replace(dir: "src/main/temp/", token: '${assets}', value: '')
     ant.replace(dir: "src/main/temp/", token: '${vars}', value: '')
 }

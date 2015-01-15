@@ -28,7 +28,7 @@
  ~ =END MIT LICENSE
  ~
 -->
-<extension xmlns="http://ns.adobe.com/air/extension/15.0">
+<extension xmlns="http://ns.adobe.com/air/extension/16.0">
     <id>com.docmet.extensions.SystemExtension</id>
     <versionNumber>1.0.0</versionNumber>
     <platforms>

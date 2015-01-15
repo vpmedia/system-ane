@@ -24,7 +24,7 @@
   ~ 
   ~ =END MIT LICENSE
 -->
-<platform xmlns="http://ns.adobe.com/air/extension/15.0">
+<platform xmlns="http://ns.adobe.com/air/extension/16.0">
     <!--sdkVersion>7.1</sdkVersion-->
     <linkerOptions>
         <!-- to link with the libiconv.dylib -->
