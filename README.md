@@ -1,4 +1,4 @@
-system-ane [![Build Status](https://travis-ci.org/ane-community/system-ane.png?branch=master)](https://travis-ci.org/ane-community/system-ane)
+system-ane [![Build Status](https://travis-ci.org/vpmedia/system-ane.png?branch=master)](https://travis-ci.org/vpmedia/system-ane)
 ==========
 
 AIR Native Extension for core Mobile System APIs
